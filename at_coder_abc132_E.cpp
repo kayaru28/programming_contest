@@ -29,38 +29,59 @@ string ans_no = "no";
 int N,M;
 int start,goal;
 
-int visited[Nmax]={};
+int visited[Nmax][4]={};
 int ans = Nmax;
-vector<int> path[Nmax][4];
+vector<int> path[Nmax];
 
-void walking(int step,int current_location){
-    step+=3;
-    bool flag = true;
+void walking(int step,vector<int> current_location){
+    step++;
+    bool flag = false;
+
+    vector<int> next1;
+    vector<int> next2;
     vector<int> target;
+    int stage;
 
-    for(int location :path[current_location][3]){
-        if(location==goal){
-            flag = false;
-            visited[location] = step;
+    stage = 1;
+    for(int location :current_location){
+        for(int next :path[location] ){
+            if(visited[next][stage]==0){
+                visited[next][stage]=1;
+                next1.push_back(next);
+                //cout << step << ":" <<stage << ":" << next<< endl;
+            }
         }
-        else if(visited[location]==0){
-            visited[location]=step;
-            target.push_back(location);
+    }
+    stage = 2;
+    for(int location :next1){
+        for(int next :path[location] ){
+            if(visited[next][stage]==0){
+                visited[next][stage]=1;
+                next2.push_back(next);
+                //cout << step << ":" <<stage << ":" << next<< endl;
+            }
         }
-        else{
-            if(visited[location] > step){
-                target.push_back(location);
-                visited[location]=step;
+    }
+    stage = 3;
+    for(int location :next2){
+        for(int next :path[location] ){
+            if(next==goal){
+                visited[goal][stage]=step;
+            }
+            else if(visited[next][stage]==0){
+                flag = true;
+                visited[next][stage]=1;
+                target.push_back(next);
+                //cout << step << ":" <<stage << ":" << next<< endl;
             }
         }
     }
     if(flag){
-        target.erase(unique(target.begin(), target.end()), target.end());
-        for(int location :target){
-            if(visited[location]==step)  walking(step,location);
-            //else //stop walking
+        if(visited[goal][3]==0){
+            sort(target.begin(), target.end());
+            unique(target.begin(), target.end()), target.end();
+            walking(step,target);
         }
-
     }
 
 
@@ -72,39 +93,14 @@ int main(){
     int source,dest;
     rep(mi,M){
         cin >> source >> dest;
-        path[source][1].push_back(dest);
+        path[source].push_back(dest);
     }
-    int leng = 2;
-    rep(current_location,N){
-        for(int location :path[current_location][leng-1]){
-            path[current_location][leng].insert(
-                path[current_location][leng].end(), 
-                path[location][1].begin(), 
-                path[location][1].end()
-            );
-        }
-        sort(path[current_location][leng].begin(), path[current_location][leng].end());
-        path[current_location][leng].erase(unique(path[current_location][leng].begin(), path[current_location][leng].end()), path[current_location][leng].end());
-    }
-
-    leng = 3;
-    rep(current_location,N){
-        for(int location :path[current_location][leng-1]){
-            path[current_location][leng].insert(
-                path[current_location][leng].end(), 
-                path[location][1].begin(), 
-                path[location][1].end()
-            );
-        }
-        sort(path[current_location][leng].begin(), path[current_location][leng].end());
-        path[current_location][leng].erase(unique(path[current_location][leng].begin(), path[current_location][leng].end()), path[current_location][leng].end());
-    }
-
-
     cin >> start >> goal;
 
     int step = 0;
-    walking(step,start);
-    if(visited[goal]==0) cout << -1 << endl;
-    else cout << visited[goal]/3 << endl;
+    vector<int> starting;
+    starting.push_back(start);
+    walking(step,starting);
+    if(visited[goal][3]==0) cout << -1 << endl;
+    else cout << visited[goal][3] << endl;
 }
