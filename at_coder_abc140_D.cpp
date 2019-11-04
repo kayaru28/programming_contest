@@ -51,46 +51,25 @@ int main(){
     else if(cnt==-N || cnt == N) cout << N-1 << endl;
     else{
         int ans=0;
+        int minus = 0;
+        int plus = 0;
         for( int i = 1 ; i <N ; i++ ){
             Fsum[i] = Flag[i] - Flag[i+1];
             if(Fsum[i]==0) ans++;
+            else if(Fsum[i]==2) plus++;
+            else if(Fsum[i]==-2) minus++;
         }
-        int l=0,r=N-1;
-        int f=0;
-        while(l<r){
-            l++;
-            if(Fsum[l]!=0){
-                while(l<r && Fsum[r] !=0){
-                    r--;
-                }
-                if(Fsum[l] == Fsum[r]) f=1;
-            }
-        }
-        
-        l=0;
-        r=N-1;
-        int cnt=0;
-        rep(ki,K){
-            while(l<r){
-                l++;
-                if(Fsum[l]!=0){
-                    while(l<r && Fsum[l] != Fsum[r] * -1){
-                        r--;
-                    }
-                    if(Fsum[l] == Fsum[r] * -1){
-                        ans+=2;
-                        cnt++;
-                        break;
-                    }else{
-                        ans+=1;
-                        cnt++;
-                        break;
-                    }
-                }
-            }
-            //cout << l << " " << r << endl;
-        }
-        if(K>cnt) ans+=f;
+
+        int sousa=0;
+        //cout << ans << endl;
+        //cout << plus << endl;
+        //cout << minus << endl;
+        sousa = min(plus,minus);
+        if(K>sousa){
+            ans += sousa*2;
+            ans += min(K-sousa,abs(plus-minus));
+        }else ans += K * 2;
+
         cout << ans << endl;
     }
 }
