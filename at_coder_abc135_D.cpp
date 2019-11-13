@@ -27,49 +27,45 @@ string ans_no = "no";
  
 ll A[10000000];
 ll B[10000000];
-ll cnt=0;
+ll cnt[10000]={};
+ll mod_cnt[10][15]={};
+ll max[10000]={};
+ll val[10000]={};
 
 int main(){
 
-    int N;
-    
-    cin >> N;
+    val[0] = 1;
+    val[1] = 10;
+    val[2] = 9;
+    val[3] = 12;
+    val[4] = 3;
+    val[5] = 4;
 
-    for( int ni = 0 ; ni <N+1 ; ni++ ){
-        cin >> A[ni];
-    }
-    for( int ni = 0 ; ni <N ; ni++ ){
-        cin >> B[ni];
-    }
 
-    int beated;
+    string S;
+    cin >> S;
+    string Sn;
+    int keta;
     int index;
-    index=0;
+    for( int si = 0 ; si < S.length() ;si++ ){
+        si = (S.length() - 1) - si;
+        Sn = S.substr(si,1);
 
-    beated = min(B[index],A[index]);
-    cnt+=beated;
-    B[index] -= beated;
-    A[index] -= beated;
-    
-    for( index = 1 ; index <N ; index++ ){
-
-        beated = min(B[index-1],A[index]);
-        cnt+=beated;
-        B[index-1] -= beated;
-        A[index] -= beated;
-
-        beated = min(B[index],A[index]);
-        cnt+=beated;
-        B[index] -= beated;
-        A[index] -= beated;
-        
+        keta = si + 1;
+        index = (keta-1) % 6 
+        cnt[index]++;
     }
-    index = N;
-    beated = min(B[index-1],A[index]);
-    cnt+=beated;
-    B[index-1] -= beated;
-    A[index] -= beated;
 
-    cout << cnt << endl;
+    int x13;
+    int mod13;
+    for( int ii = 0 ; ii <6 ; ii++ ){
+        max[ii] = cnt[ii]*9;
+        x13   = max[ii] / 13;
+        mod13 = max[ii] % 13;
+        rep(ii,13) mod_cnt[ii] = x13
+        rep(ii,mod13+1) mod_cnt[mod(val[ii]*ii,13)]++;
+    }
+
+    
 
 }
