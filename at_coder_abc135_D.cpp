@@ -25,47 +25,41 @@ string ans_No = "No";
 string ans_yes = "yes"; 
 string ans_no = "no"; 
  
-ll A[10000000];
-ll B[10000000];
-ll cnt[10000]={};
-ll mod_cnt[10][15]={};
-ll max[10000]={};
-ll val[10000]={};
+ll index[1000000][15]={};
 
 int main(){
 
-    val[0] = 1;
-    val[1] = 10;
-    val[2] = 9;
-    val[3] = 12;
-    val[4] = 3;
-    val[5] = 4;
 
 
     string S;
     cin >> S;
     string Sn;
-    int keta;
-    int index;
+    index[0][0]=1;
+    int cnt=1;
     for( int si = 0 ; si < S.length() ;si++ ){
-        si = (S.length() - 1) - si;
         Sn = S.substr(si,1);
 
-        keta = si + 1;
-        index = (keta-1) % 6 
-        cnt[index]++;
+        int target;
+        //cout << Sn << endl;
+        if(Sn=="?"){
+            rep(ii,10){
+                rep(jj,13){
+                    index[cnt][ (jj * 10 + ii)%13  ] += index[cnt-1][jj]; 
+                }
+            }
+        }else{
+            target =  atoi(Sn.c_str());
+            rep(jj,13){
+                index[cnt][ (jj * 10 + target) % 13  ] += index[cnt-1][jj]; 
+            }
+        }
+        rep(jj,13){
+            index[cnt][jj] %= MOD;
+        }
+        cnt++;
     }
+    cout << index[cnt-1][5] << endl;
 
-    int x13;
-    int mod13;
-    for( int ii = 0 ; ii <6 ; ii++ ){
-        max[ii] = cnt[ii]*9;
-        x13   = max[ii] / 13;
-        mod13 = max[ii] % 13;
-        rep(ii,13) mod_cnt[ii] = x13
-        rep(ii,mod13+1) mod_cnt[mod(val[ii]*ii,13)]++;
-    }
 
-    
 
 }
