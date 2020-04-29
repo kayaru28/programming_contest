@@ -60,16 +60,28 @@ int main(){
     index_end = N-1;
 
     ll l_cnt[10010]={};
-    ll shisu=0;
+    ll shisu=1;
     ll cnt=0;
     ll value=0;
-    for( int index = index_end ; index >= index_str ; index-- ){
-        //cout << getIntSubstr(S,index,1)  << endl;
-        value = value + getIntSubstr(S,index,1) * getPower(10,shisu,P);
-        l_cnt[value % P]++;
-        shisu++;
+    l_cnt[0]++;
+    if (P == 2 or P == 5) {
+        for (int index = 0; index < N; index++) {
+            if ((getIntSubstr(S,index,1)) % P == 0) {
+                cnt += index + 1;
+            }
+        }
+    } else {
+        for( int index = index_end ; index >= index_str ; index-- ){
+            //cout << getIntSubstr(S,index,1)  << endl;
+            value = value + getIntSubstr(S,index,1) * shisu;
+            value = value % P;
+            cnt+=l_cnt[value];
+            l_cnt[value]++;
+            //l_cnt[value % P]++;
+            shisu=(shisu*10)%P;
+        }
     }
-    cnt = 0;
+    /*
     ll tmp;
     tmp = l_cnt[0];
     //cout << tmp << endl;
@@ -80,5 +92,6 @@ int main(){
         tmp--;
         cnt+=tmp*(tmp+1)/2;
     }
+    */
     cout << cnt << endl;
 }
