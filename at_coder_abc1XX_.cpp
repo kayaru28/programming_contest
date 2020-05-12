@@ -24,19 +24,23 @@ string ans_Yes = "Yes";
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
- 
+
+ll A;
+ll B;
+ll C;
+ll N;
+ll M;
+ll K;
 
 int main(){
 
-    int A;
-    int B;
-    int C;
-    int N;
     
     cin >> A;
     cin >> B;
     cin >> C;
     cin >> N;
+    cin >> M;
+    cin >> K;
 
     string S;
     
