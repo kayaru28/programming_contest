@@ -6,6 +6,9 @@ using namespace std;
 #define rep(i,n) for (int i = 0; i < (n) ; i++)
 #define INF 1e9
 #define llINF 1e18
+#define base10_5 1e5 //100000
+#define base10_6 1e6 //1000000
+
 #define MOD 1000000007
 #define pb push_back
 #define ll long long
