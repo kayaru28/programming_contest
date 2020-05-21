@@ -13,6 +13,15 @@ using namespace std;
 #define vint vector<int>
 #define vll vector<ll>
 
+#define base10_4 1e4 //10000
+#define base10_5 1e5 //100000
+#define base10_6 1e6 //1000000
+#define base10_7 1e7 //10000000
+#define base10_8 1e8 //100000000
+#define base10_9 1e9 //1000000000
+
+
+
 //#include <stack>
 //#include <queue>
 
@@ -30,61 +39,61 @@ int N,X,Y;
 #define Gsize 200000
 vector<int> G[Gsize];
 int visit[Gsize]={};
-int seeker(vector<int> startG,int visit[]){
+int layer[Gsize]={};
+void seeker(vector<int> fromG){
     vector<int> next;
-    rep(start_index,startG.size()){
-        int starti = startG[start_index];
-        rep(next_index,G[starti].size()){
-            int nexti = G[starti][next_index];
-            if(visit[nexti]!=1){
-                visit[nexti]=1;
-                next.push_back(nexti);
+    rep(fi,fromG.size()){
+        int from_index = fromG[fi];
+        rep(ti,G[from_index].size()){
+            int to_index = G[from_index][ti];
+            if(visit[to_index]!=1){
+                visit[to_index]=1;
+                layer[to_index]=layer[from_index]+1;
+                next.push_back(to_index);
             }
         }
     }
-    if(next.size()>0) seeker(next,visit);
+    if(next.size()>0) seeker(next);
 }
+/*
+    G[ni].push_back(ni+1);
+    vector<int> startG;
+    int start = 5;
+    visit[start]=1;
+    startG.push_back(start);
+    seeker(startG);
+*/
+
+
 
 int main(){
 
     cin >> N;
-    cin >> X;
-    cin >> Y;
     for( int ni = 1 ; ni <N+1 ; ni++ ){
         G[ni].push_back(ni-1);
     }
     rep(ni,N-1){
         G[ni].push_back(ni+1);
     }
-    X=X-1;
-    Y=Y-1;
-    G[X].push_back(Y);
-    G[Y].push_back(X);
 
+    vector<int> startG;
+    int start = 5;
+    visit[start]=1;
+    startG.push_back(start);
+    seeker(startG);
 
-    rep(starti,N){
-        start=starti;
-        dist = 1;
-        int visit[N]={0};
-        vector<int> startG = {starti};
-        //dcout << "++++" << starti << endl;
-        seeker(startG,visit);
-    }
-
-    ans[2] = ans[2] - N;
-
-    for( int ni = 1 ; ni <N ; ni++ ){
-        cout << ans[ni]/2 << endl;
-    }
-
-
-
-    /*
     rep(ni,N){
         cout << "-----" << ni << endl;
         rep(nii,G[ni].size()){
             cout << G[ni][nii] << " " << endl;
         }
     }
-    */
+
+    cout << "--- layer ---" << endl;
+    rep(ni,N) cout << layer[ni] << endl;
+
+    cout <<  endl;
+    cout << "add" << endl;
+    cout << int(base10_5) << endl;
+    cout << int(base10_6) << endl;
 }
