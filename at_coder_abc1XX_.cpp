@@ -38,6 +38,10 @@ ll N;
 ll M;
 ll K;
 
+ll ltmp;
+string stmp;
+double dtmp;
+
 int main(){
 
     
