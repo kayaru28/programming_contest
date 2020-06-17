@@ -6,7 +6,7 @@
 
 using namespace std;
 #include <vector>
-#define rep(i,n) for (ll i = 0; i < (n) ; i++)
+#define rep(i,n) for (int i = 0; i < (n) ; i++)
 #define INF 1e9
 #define llINF 1e18
 #define base10_4 10000      //1e4
@@ -16,7 +16,7 @@ using namespace std;
 #define base10_8 100000000  //1e8
 #define base10_9 1000000000 //1e9
 
-#define MOD 1000000007
+#define MOD      1000000007
 #define pb push_back
 #define ll long long
 #define ull unsigned long long
@@ -37,28 +37,38 @@ ll C;
 ll N;
 ll M;
 ll K;
-
-ll ltmp;
-string stmp;
-double dtmp;
+ll ans=0;
 
 int main(){
 
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    cout.tie(0);
-
-    cin >> A;
-    cin >> B;
-    cin >> C;
+    
     cin >> N;
-    cin >> M;
     cin >> K;
 
-    string S;
-    
-    cin >> S;
+    if(K==N+1){
+        cout << 1 << endl;
+    }else{
+        ll left     = 0;
+        ll right    = 0;
 
-    
+        for( int cnt = 1 ; cnt <=K-1 ; cnt++ ){
+            ll d = cnt-1;
+            left += d;
+            right += (N-d);
+        }    
+
+        for( int cnt = K ; cnt <=N+1 ; cnt++ ){
+            ll d = cnt-1;
+            left += d;
+            right += (N-d);
+            ans += (right - left) + 1;
+            ans = ans % MOD;
+            //cout << left << " : " << right << " = " << ans << endl;
+
+        }    
+
+        cout << ans << endl;
+
+    }
 
 }
