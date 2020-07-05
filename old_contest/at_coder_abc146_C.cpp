@@ -1,12 +1,21 @@
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
-#include <string>
+#include <map>
+#include <math.h>
+
 using namespace std;
 #include <vector>
-#define rep(i,n) for (int i = 0; i < (n) ; i++)
+#define rep(i,n) for (ll i = 0; i < (n) ; i++)
 #define INF 1e9
 #define llINF 1e18
+#define base10_4 10000      //1e4
+#define base10_5 100000     //1e5
+#define base10_6 1000000    //1e6
+#define base10_7 10000000   //1e7
+#define base10_8 100000000  //1e8
+#define base10_9 1000000000 //1e9
+
 #define MOD 1000000007
 #define pb push_back
 #define ll long long
@@ -17,43 +26,56 @@ using namespace std;
 //#include <stack>
 //#include <queue>
 
-#include <math.h>
-/*
-int standerd = int(pow(10.0,9.0)) + 7;
-*/
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
- 
+
+ll A;
+ll B;
+ll X;
+
+ll ltmp;
+string stmp;
+double dtmp;
 
 int main(){
 
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
 
-    ll A;
-    ll B;
-    ll X;
     cin >> A;
     cin >> B;
     cin >> X;
-
-    int keta;
-    int K=1;
-    for( int keta = 10 ; keta >0 ; keta-- ){
-        if( X >= A * pow(10.0,(double)keta-1) + B * keta){
-            K = keta;
+    
+    ll left = 0;
+    ll right = base10_9;
+    right * base10_9;
+    
+    while(left<right){
+        ll midval = (left+right)/2;
+        string S = to_string(midval);
+        ll midmoney = A * midval + B * S.size();
+        //cout << left << " " << right << "=" << midval << endl;
+        if(midmoney==X){
+            left = midval;
             break;
-        } 
+        }else if(midmoney<X){
+            left = midval + 1;
+        }else{
+            right = midval-1;
+        }
     }
 
-    K = max(1,K);
+    string S = to_string(left);
+    ll money = A * left + B * S.size();
+    if(money > X && left>0){
+        left--;
+    }
 
-    X = X - B * K;
-    //cout << K << endl;
-    //cout << X << endl;
-    if(X/A >1000000000 ) cout << 1000000000 << endl;
-    else if (X/A < 0) cout << 0 << endl;
-    else cout << X / A << endl;
+    cout << left << endl;
 
+    
 
 }

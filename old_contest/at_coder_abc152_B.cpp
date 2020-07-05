@@ -26,9 +26,6 @@ using namespace std;
 //#include <stack>
 //#include <queue>
 
-// #include <iomanip>
-//  cout << fixed << setprecision(15) << y << endl;
-
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
@@ -53,14 +50,13 @@ int main(){
 
     cin >> A;
     cin >> B;
-    cin >> C;
-    cin >> N;
-    cin >> M;
-    cin >> K;
 
-    string S;
-    
-    cin >> S;
+    if(A<=B){
+        rep(bi,B) cout << A;
+    }else{
+        rep(ai,A) cout << B;
+    }
+
 
     
 
