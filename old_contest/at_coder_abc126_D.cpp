@@ -1,118 +1,108 @@
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
-//#include <iomanip>
+#include <map>
+#include <math.h>
+
 using namespace std;
 #include <vector>
+#define rep(i,n) for (ll i = 0; i < (n) ; i++)
+#define INF 1e9
+#define llINF 1e18
+#define base10_4 10000      //1e4
+#define base10_5 100000     //1e5
+#define base10_6 1000000    //1e6
+#define base10_7 10000000   //1e7
+#define base10_8 100000000  //1e8
+#define base10_9 1000000000 //1e9
+
+#define MOD 1000000007
+#define pb push_back
+#define ll long long
+#define ull unsigned long long
+#define vint vector<int>
+#define vll vector<ll>
+
 //#include <stack>
 //#include <queue>
-/*
-#include <math.h>
-int standerd = int(pow(10.0,9.0)) + 7;
-*/
+
+// #include <iomanip>
+//  cout << fixed << setprecision(15) << y << endl;
+
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
-#include <string>
 
+#include <queue>
+//https://cpprefjp.github.io/reference/queue/priority_queue/pop.html
+priority_queue<ll> que;
+//que.push(val);
+//ll getv = que.top();
+//que.pop();
+//typedef pair<ll,ll> P;  
+//priority_queue<P,vector<P>, greater<P> > que;
+//que.push(P(0,base_index));
 
-int getIntSubstr(string s,int start_index,int length){
-    return atoi(s.substr(start_index,length).c_str());
-}
+ll N;
+vll G[base10_6];
+vll leng[base10_6];
 
-//*******************************************************
-//***                   belongraph                    ***
-//*******************************************************
-
-struct UnionFind {
-    vector<int> par; // par[i]:iの親の番号　(例) par[3] = 2 : 3の親が2
-    vector<int> unti; // par[i]:iの親の番号　(例) par[3] = 2 : 3の親が2
-
-    UnionFind(int N) : par(N),unti(N) { //最初は全てが根であるとして初期化
-        for(int i = 0; i < N; i++){
-            par[i] = i;
-            unti[i] = -1;
-        }
-    }
-    int unti_root(int x) { // データxが属する木の根を再帰で得る：root(x) = {xの木の根}
-        if (par[x] == x) return unti[root(x)];
-    }
-    int root(int x) { // データxが属する木の根を再帰で得る：root(x) = {xの木の根}
-        if (par[x] == x) return x;
-        return par[x] = root(par[x]);
-    }
-
-    void unite(int x, int y) { // xとyの木を併合
-        int rx = root(x); //xの根をrx
-        int ry = root(y); //yの根をry
-        if (rx == ry) return; //xとyの根が同じ(=同じ木にある)時はそのまま
-        par[rx] = ry; //xとyの根が同じでない(=同じ木にない)時：xの根rxをyの根ryにつける
-    }
-    void set_unti(int x,int unti_x){
-        unti[root(x)] = root(unti_x);
-    }
-
-    bool same(int x, int y) { // 2つのデータx, yが属する木が同じならtrueを返す
-        int rx = root(x);
-        int ry = root(y);
-        return rx == ry;
-    }
-
-    void output(){
-        int ans[par.size()]={};
-        for( int ni = 0 ; ni < par.size() ; ni++ ){
-            if(unti_root(ni)>=0){
-                if(ans[unti_root(ni)] == 0){
-                    ans[root(ni)] = 1;
-                }
-                 else{
-                    ans[root(ni)] = 0;
-                }
-            }
-            else{
-                ans[root(ni)] = 0;
-            }
-        }
-        for( int ni = 0 ; ni < par.size() ; ni++ ){
-            ans[ni] = ans[root(ni)];
-        }
-        for( int ni = 0 ; ni < par.size() ; ni++ ){
-            cout << ans[ni] << endl;
-        }
-    }
-};
-
-
+ll visited[base10_6]={};
+ll node_belong[base10_6];
 
 int main(){
 
-    int N;
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
     cin >> N;
 
-    int leng;
+    for( ll ni = 1 ; ni <=N-1 ; ni++ ){
+        ll u,v,w;
+        cin >> u;
+        cin >> v;
+        cin >> w;
 
+        G[u].push_back(v);
+        leng[u].push_back(w);
 
-    int top1,top2;
-    UnionFind uf(N);
-
-    for( int ni = 0 ; ni < N-1 ; ni++ ){
-        cin >> top1;
-        cin >> top2;
-        top1--;
-        top2--;
-        cin >> leng;
-        if(leng % 2 != 0){
-            uf.set_unti(top1,top2);
-            uf.set_unti(top2,top1);
-            if(uf.unti_root(top2)>=0){
-                uf.unite(top1,uf.unti_root(top2));
-            }
-            if(uf.unti_root(top1)>=0){
-                uf.unite(top2,uf.unti_root(top1));
-            }
-        }
+        G[v].push_back(u);
+        leng[v].push_back(w);
     }
-    uf.output();    
-    
+    ll index = 1;
+    visited[index]=1;
+    node_belong[index]=0;
+    que.push(index);
+
+    while(que.size()>0){
+        ll base_index = que.top();
+        que.pop();
+
+        rep(gi,G[base_index].size()){
+            ll ni = G[base_index][gi];
+            ll li = leng[base_index][gi];
+
+            if(visited[ni]==0){
+                que.push(ni);
+                ll bi = (node_belong[base_index] + li % 2 ) % 2;
+                //cout << "ni " << ni << endl;
+                //cout << "bi " << bi << endl;
+                node_belong[ni]=bi;
+                visited[ni]=1;
+            }
+
+        }
+    }    
+
+
+    for( ll ni = 1 ; ni <=N ; ni++ ){
+        cout << node_belong[ni] << endl;
+    }    
+
+
+
+
+
 }
