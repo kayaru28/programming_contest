@@ -1,55 +1,72 @@
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
-#include <iomanip>
+#include <map>
+#include <math.h>
+
 using namespace std;
-//#include <vector>
+#include <vector>
+#define rep(i,n) for (ll i = 0; i < (n) ; i++)
+#define INF 1e9
+#define llINF 1e18
+#define base10_4 10000      //1e4
+#define base10_5 100000     //1e5
+#define base10_6 1000000    //1e6
+#define base10_7 10000000   //1e7
+#define base10_8 100000000  //1e8
+#define base10_9 1000000000 //1e9
+
+#define MOD 1000000007
+#define pb push_back
+#define ll long long
+#define ull unsigned long long
+#define vint vector<int>
+#define vll vector<ll>
+
 //#include <stack>
 //#include <queue>
 
-#include <math.h>
-int standerd = int(pow(10.0,9.0)) + 7;
+#include <iomanip>
 
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
-#include <string>
 
+ll A;
+ll B;
+ll C;
+ll N;
+ll M;
+ll K;
 
-int getIntSubstr(string s,int start_index,int length){
-    return atoi(s.substr(start_index,length).c_str());
-}
-  
+ll ltmp;
+string stmp;
+double dtmp;
+
 int main(){
 
-    int N;
-    int K;
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
     cin >> N;
     cin >> K;
 
-    int tmp_kaisu=0;
-    int kaisu[N+1];
+    double ans = 0;
 
-    double tmpK;
-    tmpK=K;
-    for( int ni = N ; ni > 0 ; ni-- ){
-        while(ni < tmpK){
-            tmp_kaisu++;
-            tmpK = tmpK/2;
+    double base = 1;
+    for( ll ni = N ; ni >0 ; ni-- ){
+        while(ni*base < K){
+            base*=2;
         }
-        kaisu[ni]=tmp_kaisu;
+        ans += ( 1 / base);
     }
-    double ans = 0.0;
-    for( int ni = N ; ni > 0 ; ni-- ){
-        double added = 1.0 / N;
-        for( int ki = 0 ; ki < kaisu[ni] ; ki++ ){
-            added = added * 0.5;
-        }
-        ans = ans + added;
-    }
-    //1000000000
-    cout << setprecision(12) << ans;
+
+    ans = ans / N;
+
+
+    cout << fixed << setprecision(15) << ans << endl;
 
 
 }
