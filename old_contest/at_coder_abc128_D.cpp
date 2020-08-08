@@ -1,73 +1,113 @@
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
+#include <map>
+#include <math.h>
+
 using namespace std;
 #include <vector>
+#define rep(i,n) for (ll i = 0; i < (n) ; i++)
+#define INF 1e9
+#define llINF 1e18
+#define base10_4 10000      //1e4
+#define base10_5 100000     //1e5
+#define base10_6 1000000    //1e6
+#define base10_7 10000000   //1e7
+#define base10_8 100000000  //1e8
+#define base10_9 1000000000 //1e9
+
+#define MOD 1000000007
+#define pb push_back
+#define ll long long
+#define ull unsigned long long
+#define vint vector<int>
+#define vll vector<ll>
+
 //#include <stack>
 //#include <queue>
 
-/*
-#include <math.h>
-int standerd = int(pow(10.0,9.0)) + 7;
-*/
+// #include <iomanip>
+//  cout << fixed << setprecision(15) << y << endl;
+
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
 
+ll A;
+ll B;
+ll C;
+ll N;
+ll M;
+ll K;
+vll V;
 
-int N_hoseki;
-int K_sousa;
-
+ll ltmp;
+string stmp;
+double dtmp;
+ll llmin(ll a,ll b){
+    if(a>=b) return b;
+    return a;
+}
+ll llmax(ll a,ll b){
+    if(a<=b) return b;
+    return a;
+}
 int main(){
 
-    cin >> N_hoseki;
-    cin >> K_sousa;
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
 
-    int value[N_hoseki];
-    vector<int> minus_value;
+    cin >> N;
+    cin >> K;
 
-
-    for( int ni = 0 ; ni < N_hoseki ; ni++ ){
-        cin >> value[ni];
+    rep(ni,N){
+        cin >> ltmp;
+        V.push_back(ltmp);
     }
 
-    int max_rindex;
-    int max_lindex;
-    int ans = 0;
-    int getv;
-    max_rindex = min(N_hoseki,K_sousa);
-    for( int rget = 0 ; rget <= max_rindex ; rget++ ){
-        max_lindex = min(K_sousa - rget, N_hoseki - rget);
-        for( int lget = 0 ; lget <= max_lindex  ; lget++ ){
-            getv = 0;
-            minus_value.clear();
+    ll li_max = llmin(K,N);
+    ll ans = 0;
+    for( ll li = 0 ; li <=K ; li ++ ){
+        ll left_k = li_max - li;
+        for( ll ri = 0 ; ri <= left_k ; ri++ ){
+            
+            vll Vp;
+            vll Vm;
 
-            for( int nr = 0 ; nr < rget ; nr++ ){
-                getv += value[nr];
-                if(value[nr]<0) minus_value.push_back(value[nr]);
+            rep(l,li){
+                ll index = l;
+                ll val = V[index];
+                if(val>=0) Vp.push_back(val);
+                else Vm.push_back(val);
             }
-            int index;
-            for( int nl = 0 ; nl < lget ; nl++ ){
-                index = N_hoseki - 1 - nl;
-                getv += value[index];
-                if(value[index]<0) minus_value.push_back(value[index]);
+            rep(r,ri){
+                ll index = (N-1) - r;
+                ll val = V[index];
+                if(val>=0) Vp.push_back(val);
+                else Vm.push_back(val);
             }
 
-            sort(minus_value.begin(),minus_value.end());
-            for( int nt = 0 ; nt < K_sousa - rget - lget ; nt++ ){
-                if(minus_value.size()>0){
-                    getv += -1 * minus_value[0];
-                    minus_value.erase(minus_value.begin());
+            sort(Vm.begin(),Vm.end());
+            ll tmpans=0;
+            ll count_m = K - li - ri;
+            rep(pi,Vp.size()) tmpans += Vp[pi];
+            rep(mi,Vm.size()){
+                if(count_m>0){
+                    count_m--;
+                }else{
+                    tmpans+=Vm[mi];
                 }
             }
-            //cout << getv << ":" << rget << "-" << lget << endl;
-            if(ans < getv) ans = getv;
+            //cout << li << " : " << ri << " = " << tmpans << endl;
+            ans = llmax(ans,tmpans);
         }
     }
+    cout << ans << endl;
 
-    cout << ans;
 
 
+    
 
 }
