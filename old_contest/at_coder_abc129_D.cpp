@@ -1,86 +1,126 @@
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
+#include <map>
+#include <math.h>
+
 using namespace std;
 #include <vector>
-#define rep(i,n) for (int i = 0; i < (n) ; i++)
-typedef long long ll;
+#define rep(i,n) for (ll i = 0; i < (n) ; i++)
+#define INF 1e9
+#define llINF 1e18
+#define base10_4 10000      //1e4
+#define base10_5 100000     //1e5
+#define base10_6 1000000    //1e6
+#define base10_7 10000000   //1e7
+#define base10_8 100000000  //1e8
+#define base10_9 1000000000 //1e9
+
+#define MOD 1000000007
+#define pb push_back
+#define ll long long
+#define ull unsigned long long
+#define vint vector<int>
+#define vll vector<ll>
+
 //#include <stack>
 //#include <queue>
-#define MOD 1000000007
+
+// #include <iomanip>
+//  cout << fixed << setprecision(15) << y << endl;
 
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
- 
 
-int tile[2010][2010]={};
-int cnt[2010][2010][4]={};
+ll H;
+ll W;
+ll C;
+ll N;
+ll M;
+ll K;
 
+ll ltmp;
+string stmp;
+double dtmp;
+vll MASU[base10_5];
+ll CNT[2000][2000]={};
+ll CNTH[2000][2000]={};
+ll llmin(ll a,ll b){
+    if(a>=b) return b;
+    return a;
+}
+ll llmax(ll a,ll b){
+    if(a<=b) return b;
+    return a;
+}
 int main(){
-    int H,W;
-    cin >> H >> W;
-    string S;
-    string tmpS;
 
-    for( int hi = 1 ; hi <= H ; hi++ ){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    cin >> H;
+    cin >> W;
+    rep(hi,H){
+        string S;
         cin >> S;
-        for( int wi = 1 ; wi <= W  ; wi++ ){
-            tmpS = S.substr(wi-1,1);
-            if(tmpS =="#") tile[hi][wi] = 0;
-            else tile[hi][wi] = 1;
-        }
-    }
-    int left = 0;
-    int above = 1;
-    int under = 2;
-    int right = 3;
-    int ih,iw,iv;
-    for( int hi = 1 ; hi <= H ; hi++ ){
-        for( int wi = 1 ; wi <= W  ; wi++ ){
-            if(tile[hi][wi] != 0){
-                ih = hi; iw = wi-1; iv = left;
-                cnt[hi][wi][iv] = cnt[ih][iw][iv] * tile[ih][iw]  + 1;
-                ih = hi-1; iw = wi; iv = above;
-                cnt[hi][wi][iv] = cnt[ih][iw][iv] * tile[ih][iw]  + 1;
-            }
-        }
-    }
-    for( int hi = H ; hi >= 1 ; hi-- ){
-        for( int wi = W ; wi >= 1  ; wi-- ){
-            if(tile[hi][wi] != 0){
-                ih = hi; iw = wi+1; iv = right;
-                cnt[hi][wi][iv] = cnt[ih][iw][iv] * tile[ih][iw]  + 1;
-                ih = hi+1; iw = wi; iv = under;
-                cnt[hi][wi][iv] = cnt[ih][iw][iv] * tile[ih][iw]  + 1;
-            }
+        rep(wi,W){
+            //cout << wi << endl;
+            if(S.substr(wi,1)=="#")   MASU[hi].push_back(1);
+            else             MASU[hi].push_back(0);
         }
     }
 
-    int ans = 0;
-    int sum;
-    for( int hi = H ; hi >= 1 ; hi-- ){
-        for( int wi = W ; wi >= 1  ; wi-- ){
-            sum = 0;
-            for( int vi = 0 ; vi < 4 ; vi++ ){
-                sum+= cnt[hi][wi][vi];
+    ll ans = 0;
+
+    rep(hi,H){
+        ll bef = 1;
+
+            rep(wi,W){
+            if(MASU[hi][wi]==0){
+                if(bef==0) CNT[hi][wi] = CNT[hi][wi-1];
+                else{
+                    ltmp = 1;
+                    while(1){
+                        if(wi+ltmp>=W) break;
+                        if(MASU[hi][wi+ltmp]==1) break;
+                        ltmp++;
+                    }
+                    CNT[hi][wi]+=ltmp;
+                }
             }
-            ans = max(sum-3,ans);
+            bef = MASU[hi][wi];
+        }
+    }
+    rep(wi,W){
+        ll bef = 1;
+        rep(hi,H){
+            if(MASU[hi][wi]==0){
+                if(bef==0) CNTH[hi][wi] = CNTH[hi-1][wi];
+                else{
+                    ltmp = 1;
+                    while(1){
+                        if(hi+ltmp>=H) break;
+                        if(MASU[hi+ltmp][wi]==1) break;
+
+                        ltmp++;
+                    }
+                    CNTH[hi][wi]+=ltmp;
+                }
+            }
+            bef = MASU[hi][wi];
+        }
+    }
+
+
+    rep(hi,H){
+        rep(wi,W){
+            ans = llmax(ans,CNT[hi][wi]+CNTH[hi][wi]-1);
         }
     }
     cout << ans << endl;
-    /*
-    for( int vi = 0 ; vi < 4 ; vi++ ){
-        for( int hi = 1 ; hi <= H ; hi++ ){
-            for( int wi = 1 ; wi <= W  ; wi++ ){
-                cout <<  cnt[hi][wi][vi];
-                cout << " ";
-            }
-            cout << "" << endl;
-        }
-        cout << "" << endl;
-    }
-    */
+    
 
 }
