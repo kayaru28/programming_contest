@@ -1,13 +1,21 @@
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
-#include <vector>
+#include <map>
 #include <math.h>
 
 using namespace std;
-#define rep(i,n) for (int i = 0; i < (n) ; i++)
+#include <vector>
+#define rep(i,n) for (ll i = 0; i < (n) ; i++)
 #define INF 1e9
 #define llINF 1e18
+#define base10_4 10000      //1e4
+#define base10_5 100000     //1e5
+#define base10_6 1000000    //1e6
+#define base10_7 10000000   //1e7
+#define base10_8 100000000  //1e8
+#define base10_9 1000000000 //1e9
+
 #define MOD 1000000007
 #define pb push_back
 #define ll long long
@@ -18,42 +26,42 @@ using namespace std;
 //#include <stack>
 //#include <queue>
 
+// #include <iomanip>
+//  cout << fixed << setprecision(15) << y << endl;
 
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
- 
+
+ll N;
+ll X;
+vll L;
+
+ll ltmp;
+string stmp;
+double dtmp;
 
 int main(){
 
-    int D;
-    int N;
-    
-    cin >> N;
-    cin >> D;
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
 
-    int X[N][D];
+    cin >> N;
+    cin >> X;
 
     rep(ni,N){
-        rep(di,D){
-            cin >> X[ni][di];
-        }
+        cin >> ltmp;
+        L.push_back(ltmp);
     }
+    ll D = 0;
+    ll ans = 1;
+    rep(ni,N){
+        D+=L[ni];
+        if(D>X) break;
+        ans++;
+    }
+    cout << ans << endl;   
 
-    int count = 0;
-    double dist;
-    int tmp;
-    rep(n1,N-1){
-        for( int n2 = n1+1 ; n2 < N ; n2++ ){
-            dist = 0;
-            rep(di,D){
-                dist+=(X[n1][di]-X[n2][di])*(X[n1][di]-X[n2][di]);
-            }
-            tmp = sqrt(dist);
-            if(tmp == sqrt(dist)) count++;
-            
-        }
-    }
-    cout << count << endl;
 }
