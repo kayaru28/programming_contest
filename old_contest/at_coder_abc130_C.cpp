@@ -1,13 +1,21 @@
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
-#include <vector>
+#include <map>
 #include <math.h>
 
 using namespace std;
-#define rep(i,n) for (int i = 0; i < (n) ; i++)
+#include <vector>
+#define rep(i,n) for (ll i = 0; i < (n) ; i++)
 #define INF 1e9
 #define llINF 1e18
+#define base10_4 10000      //1e4
+#define base10_5 100000     //1e5
+#define base10_6 1000000    //1e6
+#define base10_7 10000000   //1e7
+#define base10_8 100000000  //1e8
+#define base10_9 1000000000 //1e9
+
 #define MOD 1000000007
 #define pb push_back
 #define ll long long
@@ -18,41 +26,33 @@ using namespace std;
 //#include <stack>
 //#include <queue>
 
+// #include <iomanip>
+//  cout << fixed << setprecision(15) << y << endl;
 
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
- 
+
+double W;
+double H;
+ll x;
+ll y;
+
+ll ltmp;
+string stmp;
+double dtmp;
 
 int main(){
 
-    ll L;
-    ll R;
-    
-    cin >> L;
-    cin >> R;
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
 
-    ll Ll = L % 2019;
-    ll Rr = R % 2019;
+    cin >> W >> H >> x >> y;
 
-    if( R - L >= 2019  ) cout << 0 << endl;
-    else{
+    cout << W*H/2 << endl;   
 
-        if(Rr < Ll) Rr += Rr + 2019;
-
-        ll ans = 2019 * 2019;
-        ll tmp;
-        //cout << Ll << endl;
-        //cout << Rr << endl;
-        for( int n1 = Ll ; n1 <= Rr-1 ; n1++ ){
-            for( int n2 = n1 + 1 ; n2 <= Rr ; n2++ ){
-                tmp = (n1 * n2) % 2019;        
-                if(tmp < ans ) ans = tmp;
-            }
-            
-        }
-        cout << ans << endl;
-
-    }
+    if(W/2==x && H/2==y) cout << 1 << endl;
+    else cout << 0 << endl;
 }
