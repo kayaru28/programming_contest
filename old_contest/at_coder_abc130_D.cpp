@@ -1,13 +1,21 @@
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
-#include <vector>
+#include <map>
 #include <math.h>
 
 using namespace std;
-#define rep(i,n) for (int i = 0; i < (n) ; i++)
+#include <vector>
+#define rep(i,n) for (ll i = 0; i < (n) ; i++)
 #define INF 1e9
 #define llINF 1e18
+#define base10_4 10000      //1e4
+#define base10_5 100000     //1e5
+#define base10_6 1000000    //1e6
+#define base10_7 10000000   //1e7
+#define base10_8 100000000  //1e8
+#define base10_9 1000000000 //1e9
+
 #define MOD 1000000007
 #define pb push_back
 #define ll long long
@@ -18,36 +26,59 @@ using namespace std;
 //#include <stack>
 //#include <queue>
 
+// #include <iomanip>
+//  cout << fixed << setprecision(15) << y << endl;
 
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
- 
 
+vll A;
+vll sumsA;
+ll C;
+ll N;
+ll M;
+ll K;
+
+ll ltmp;
+string stmp;
+double dtmp;
 
 int main(){
-    int N;
+
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
     cin >> N;
-    ll A[N];
-
-    ll Amin=10000000000;
-    int i_Amin;
-    ll sum = 0;
-    rep(ni,N){
-        cin >> A[ni];
-        if(ni % 2 == 0 ) sum+=A[ni] * 2;
-        else sum -= A[ni] * 2;
-    }
-
-    ll ans[N];
-    ans[0] = sum/2;
-    for( int ni = 1 ; ni < N ; ni++ ){
-        ans[ni] = ( A[ni-1] - ans[ni-1]/2 ) * 2;
-    }
+    cin >> K;
 
     rep(ni,N){
-        cout << ans[ni];
-        cout << " ";
+        cin >> ltmp;
+        A.push_back(ltmp);
     }
+
+    ll ans = 0;
+    ll index = 0;
+    ll sumtmp=A[index];
+    rep(ni,N){
+        while(index<N){
+            if(sumtmp>=K){
+                ll dans = N - index;
+                //cout << ni << " : " << index << " " << K << endl;
+                ans += dans;                
+                break;
+            }
+            index++;
+            sumtmp+=A[index];
+        }
+        K+=A[ni];
+    }
+    cout << ans << endl;
+
+
+
+    
+
 }
