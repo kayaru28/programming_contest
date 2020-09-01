@@ -1,35 +1,67 @@
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
+#include <map>
+#include <math.h>
+
 using namespace std;
 #include <vector>
+#define rep(i,n) for (ll i = 0; i < (n) ; i++)
+#define INF 1e9
+#define llINF 1e18
+#define base10_4 10000      //1e4
+#define base10_5 100000     //1e5
+#define base10_6 1000000    //1e6
+#define base10_7 10000000   //1e7
+#define base10_8 100000000  //1e8
+#define base10_9 1000000000 //1e9
+
+#define MOD 1000000007
+#define pb push_back
+#define ll long long
+#define ld long double
+#define ull unsigned long long
+#define vint vector<int>
+#define vll vector<ll>
+
 //#include <stack>
 //#include <queue>
 
-/*
-#include <math.h>
-int standerd = int(pow(10.0,9.0)) + 7;
-*/
+// #include <iomanip>
+//  cout << fixed << setprecision(15) << y << endl;
+
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
- 
+
+ll A;
+ll B;
+ll C;
+ll N;
+ll M;
+ll K;
+
+ll ltmp;
+string stmp;
+double dtmp;
 
 int main(){
 
-    string B;
-    cin >> B;
-    string tmp;
-    tmp = B.substr(0,1);
-    string tmp2;
-    
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    string S;
+    cin >> S;
     string ans = "Good";
-    for( int bi = 1 ; bi < B.length() ; bi++ ){
-        tmp2 = B.substr(bi,1);
-        if(tmp == tmp2) ans = "Bad";
-        tmp = B.substr(bi,1);
+    for( ll ni = 0 ; ni <=2 ; ni++ ){
+        string S1 = S.substr(ni,1);
+        string S2 = S.substr(ni+1,1);
+        if(S1==S2) ans = "Bad";
     }
     cout << ans << endl;
+
+    
 
 }
