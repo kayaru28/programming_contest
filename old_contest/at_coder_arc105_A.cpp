@@ -35,50 +35,16 @@ string ans_No = "No";
 string ans_yes = "yes"; 
 string ans_no = "no"; 
 
-vll A;
-vll B;
+ll A;
+ll B;
 ll C;
-ll N;
+ll D;
 ll M;
 ll K;
 
-
-
 ll ltmp;
-ll ltmpA;
-ll ltmpB;
 string stmp;
 double dtmp;
-
-#include <queue>
-//https://cpprefjp.github.io/reference/queue/priority_queue/pop.html
-//std::priority_queue<ll> que;
-//que.push(val);
-//ll getv = que.top();
-//que.pop();
-//que.push(P(0,base_index));
-
-typedef pair<ll,ll> P;  
-priority_queue<P,vector<P>, greater<P> > que;
-
-int solve(){
-    rep(ni,N){
-        que.push(P(B[ni],A[ni]));
-    }
-    ll T=0;
-    rep(ni,N){
-        P getv = que.top();
-        T+= getv.second;
-        if(getv.first < T){
-            cout << "No" << endl;
-            return 0;
-        }
-        que.pop();
-    }
-
-    cout << "Yes" << endl;
-    return 0;
-}
 
 int main(){
 
@@ -86,13 +52,33 @@ int main(){
     cin.tie(0);
     cout.tie(0);
 
-    cin >> N;
+    cin >> A;
+    cin >> B;
+    cin >> C;
+    cin >> D;
 
-    rep(ni,N){
-        cin >> ltmpA >> ltmpB;
-        A.push_back(ltmpA);
-        B.push_back(ltmpB);
+    ll SUMA = A+B+C+D;
+    string ans = "No";
+
+    if(SUMA%2==0){
+        double CRE = SUMA/2;
+        vll V;
+        V.push_back(A);
+        V.push_back(B);
+        V.push_back(C);
+        V.push_back(D);
+        
+        rep(ni,4){
+            if(V[ni]==CRE) ans = "Yes";
+        }
+        if(A+B == CRE) ans ="Yes";
+        if(A+C == CRE) ans ="Yes";
+        if(A+D == CRE) ans ="Yes";
+        if(B+C == CRE) ans ="Yes";
+        if(B+D == CRE) ans ="Yes";
+        if(D+C == CRE) ans ="Yes";
+
     }
+    cout << ans << endl;
 
-    solve();
 }
