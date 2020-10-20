@@ -19,7 +19,6 @@ using namespace std;
 #define MOD 1000000007
 #define pb push_back
 #define ll long long
-#define ld long double
 #define ull unsigned long long
 #define vint vector<int>
 #define vll vector<ll>
@@ -27,15 +26,14 @@ using namespace std;
 //#include <stack>
 //#include <queue>
 
-// #include <iomanip>
-//  cout << fixed << setprecision(15) << y << endl;
+#include <iomanip>
 
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
 
-ll A;
+vll A;
 ll B;
 ll C;
 ll N;
@@ -46,56 +44,26 @@ ll ltmp;
 string stmp;
 double dtmp;
 
-/*
-max 448,000,000
-map<string,ll> count_map;
-count_map['0']=0;
-for(auto x : count_map) {
-    string key = x.first;
-    ll value = x.second;
-}
-*/
-string S;
-    
-int solve(){
-    map<string,ll> count_map;
-    rep(si,S.size()){
-        count_map[S.substr(si,1)]++;
-    }
-    ll cnt = 0;
-    for(auto x : count_map) {
-        cnt++;
-    }
-    if(cnt!=2){
-        cout << "No" << endl;
-        return 0;
-    }
-
-    for(auto x : count_map) {
-        if(x.second!=2){
-            cout << "No" << endl;
-            return 0;
-            
-        }
-    }
-    cout << "Yes" << endl;
-    return 0;
-
-
-}
-
 int main(){
 
     ios::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
 
-    
-    cin >> S;
+    cin >> N;
 
+    rep(ni,N){
+        cin>>ltmp;
+        A.push_back(ltmp);
+    }    
+    sort(A.begin(),A.end());
 
-    solve();
-
-    
+    double val;
+    val = A[0];
+    for( ll ai = 1 ; ai <N ; ai++ ){
+        dtmp = A[ai];
+        val = (val + dtmp)/2;
+    }
+    cout << fixed << setprecision(15) << val << endl;
 
 }
