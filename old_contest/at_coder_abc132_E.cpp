@@ -1,14 +1,25 @@
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
+#include <map>
+#include <math.h>
+
 using namespace std;
 #include <vector>
-#define rep(i,n) for (int i = 0; i < (n) ; i++)
+#define rep(i,n) for (ll i = 0; i < (n) ; i++)
 #define INF 1e9
 #define llINF 1e18
+#define base10_4 10000      //1e4
+#define base10_5 100010     //1e5
+#define base10_6 1000000    //1e6
+#define base10_7 10000000   //1e7
+#define base10_8 100000000  //1e8
+#define base10_9 1000000000 //1e9
+
 #define MOD 1000000007
 #define pb push_back
 #define ll long long
+#define ld long double
 #define ull unsigned long long
 #define vint vector<int>
 #define vll vector<ll>
@@ -16,91 +27,131 @@ using namespace std;
 //#include <stack>
 //#include <queue>
 
-/*
-#include <math.h>
-int standerd = int(pow(10.0,9.0)) + 7;
-*/
+// #include <iomanip>
+//  cout << fixed << setprecision(15) << y << endl;
+
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
 
-#define Nmax 100010
-int N,M;
-int start,goal;
+ll A;
+ll B;
+ll C;
+ll N;
+ll M;
+ll S;
+ll T;
+ll from;
+ll to;
 
-int visited[Nmax][4]={};
-int ans = Nmax;
-vector<int> path[Nmax];
-
-void walking(int step,vector<int> current_location){
-    step++;
-    bool flag = false;
-
-    vector<int> next1;
-    vector<int> next2;
-    vector<int> target;
-    int stage;
-
-    stage = 1;
-    for(int location :current_location){
-        for(int next :path[location] ){
-            if(visited[next][stage]==0){
-                visited[next][stage]=1;
-                next1.push_back(next);
-                //cout << step << ":" <<stage << ":" << next<< endl;
-            }
-        }
-    }
-    stage = 2;
-    for(int location :next1){
-        for(int next :path[location] ){
-            if(visited[next][stage]==0){
-                visited[next][stage]=1;
-                next2.push_back(next);
-                //cout << step << ":" <<stage << ":" << next<< endl;
-            }
-        }
-    }
-    stage = 3;
-    for(int location :next2){
-        for(int next :path[location] ){
-            if(next==goal){
-                visited[goal][stage]=step;
-            }
-            else if(visited[next][stage]==0){
-                flag = true;
-                visited[next][stage]=1;
-                target.push_back(next);
-                //cout << step << ":" <<stage << ":" << next<< endl;
-            }
-        }
-    }
-    if(flag){
-        if(visited[goal][3]==0){
-            sort(target.begin(), target.end());
-            unique(target.begin(), target.end()), target.end();
-            walking(step,target);
-        }
-    }
-
-
+/*
+max 448,000,000
+map<string,ll> count_map;
+count_map['0']=0;
+for(auto x : count_map) {
+    string key = x.first;
+    ll value = x.second;
 }
+*/
+
+map<int,int> step_1;
+map<int,int> step_2;
+map<int,int> step_3;
+ll cost3[base10_5];
+vector<ll> ngraph[base10_5];
+
+ll ltmp;
+string stmp;
+double dtmp;
+#include <queue>
+//https://cpprefjp.github.io/reference/queue/priority_queue/pop.html
+//std::priority_queue<ll> que;
+//que.push(val);
+//
+//
+//que.push(P(0,base_index));
+
+typedef pair<ll,ll> P;  
+
+
+int solve(){
+    rep(ni,base10_5) cost3[ni] = base10_9;
+    priority_queue<P,vector<P>, greater<P> > next;
+    next.push(P(0,S));
+    while(next.size()>0){
+        P getv = next.top();
+        next.pop();
+        from = getv.second;
+
+        ll step_from = getv.first;
+        ll step_to = step_from + 1;
+
+        vll step1;
+        vll step2;
+        vll step3;
+
+        rep(ti,ngraph[from].size()){
+            to = ngraph[from][ti];
+            if(step_1[to]==0){
+                step_1[to]=1;
+                step1.push_back(to);
+            }
+        }
+        rep(si,step1.size()){
+            from = step1[si];
+            rep(ti,ngraph[from].size()){
+                to = ngraph[from][ti];
+                if(step_2[to]==0){
+                    step_2[to]=1;
+                    step2.push_back(to);
+                }
+            }
+        }
+        rep(si,step2.size()){
+            from = step2[si];
+            rep(ti,ngraph[from].size()){
+                to = ngraph[from][ti];
+                if(step_3[to]==0){
+                    step_3[to]=1;
+                    step3.push_back(to);
+                }
+            }
+        }
+        rep(si,step3.size()){
+            to = step3[si];
+            cost3[to]=step_to;
+            next.push(P(step_to,to));
+        }
+
+        if(step_3[T]==1) return cost3[T]; 
+    }
+
+    if(cost3[T] == base10_9) return -1;
+    else return cost3[T];
+}
+
 int main(){
 
-    cin >> N >> M;
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
 
-    int source,dest;
+
+    cin >> N;
+    cin >> M;
     rep(mi,M){
-        cin >> source >> dest;
-        path[source].push_back(dest);
+        cin >> from;
+        cin >> to;
+        ngraph[from].push_back(to);
     }
-    cin >> start >> goal;
+    cin >> S;
+    cin >> T;
+    
+    cout << solve() << endl;
 
-    int step = 0;
-    vector<int> starting;
-    starting.push_back(start);
-    walking(step,starting);
-    if(visited[goal][3]==0) cout << -1 << endl;
-    else cout << visited[goal][3] << endl;
+
+
+    
+
 }
