@@ -1,14 +1,25 @@
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
+#include <map>
+#include <math.h>
+
 using namespace std;
 #include <vector>
-#define rep(i,n) for (int i = 0; i < (n) ; i++)
+#define rep(i,n) for (ll i = 0; i < (n) ; i++)
 #define INF 1e9
 #define llINF 1e18
+#define base10_4 10000      //1e4
+#define base10_5 100000     //1e5
+#define base10_6 1000000    //1e6
+#define base10_7 10000000   //1e7
+#define base10_8 100000000  //1e8
+#define base10_9 1000000000 //1e9
+
 #define MOD 1000000007
 #define pb push_back
 #define ll long long
+#define ld long double
 #define ull unsigned long long
 #define vint vector<int>
 #define vll vector<ll>
@@ -16,67 +27,86 @@ using namespace std;
 //#include <stack>
 //#include <queue>
 
-/*
-#include <math.h>
-int standerd = int(pow(10.0,9.0)) + 7;
-*/
+// #include <iomanip>
+//  cout << fixed << setprecision(15) << y << endl;
+
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
- 
-vector<int> A;
-vector<int> B;
-int N;
-int cnt;
 
-int binary(int target){
-    int left=0;
-    int right;
-    right = cnt; //n-1ではなくnなのは右端に解がある時のため
-    int mid;
-    if(target > B[0]){
-        return 0;
-    }else if(B[cnt-1] >= target){
-        return N;
-    }else{
-        while(left<right){ //二分探索
-            mid = (left+right)/2;
-            if(target > B[mid] && B[mid-1] >= target){
-                return mid;
-            }else if(target > B[mid]){
-                right = mid;
-            }else if(B[mid] >= target){
-                left = mid;
-            }
-        }
-    }
+vll A;
+ll B;
+ll C;
+ll N;
+ll M;
+ll K;
+
+ll ltmp;
+string stmp;
+double dtmp;
+
+/*
+max 448,000,000
+count_map['0']=0;
+for(auto x : count_map) {
+    string key = x.first;
+    ll value = x.second;
 }
+*/
 
-
-
+map<ll,vll> count_map;
+//探索したいkeyより大きい
+ll getIndexUpperBoundLong(vll x_vector,ll key){
+    decltype(x_vector)::iterator it = upper_bound(x_vector.begin(), x_vector.end(), key);
+    ll index = distance(x_vector.begin(), it);
+    return index;
+}
+//探索したいkeyより大きい
+ll getIndexUpperBoundString(vector<string> x_vector,string key){
+    decltype(x_vector)::iterator it = upper_bound(x_vector.begin(), x_vector.end(), key);
+    ll index = distance(x_vector.begin(), it);
+    return index;
+}
+//探索したいkey以上
+ll getIndexLowerBoundLong(vll x_vector,ll key){
+    decltype(x_vector)::iterator it = lower_bound(x_vector.begin(), x_vector.end(), key);
+    ll index = distance(x_vector.begin(), it);
+    return index;
+}
+//探索したいkey以上
+ll getIndexLowerBoundString(vector<string> x_vector,string key){
+    decltype(x_vector)::iterator it = lower_bound(x_vector.begin(), x_vector.end(), key);
+    ll index = distance(x_vector.begin(), it);
+    return index;
+}
 int main(){
-    cnt = 1;
+
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
     cin >> N;
-    int tmp;
-    cin >> tmp;
-    A.push_back(tmp);
+    rep(ni,N){
+        cin >> ltmp;
+        A.push_back(ltmp);
+        count_map[ltmp].push_back(ni+1);
+    }
 
-    int border_min;
-
-    B.push_back(A[0]);
-    int index;
-    for( int ni = 1 ; ni <N ; ni++ ){
-        cin >> tmp;
-        A.push_back(tmp);
-        index = binary(tmp);
-
-        if(index==N){
-            B.push_back(A[ni]);
-            cnt++;
+    vll values;
+    values.push_back(A[N-1]);
+    for( ll ni = N-2 ; ni >=0 ; ni-- ){
+        ll vmax = values[values.size()-1];
+        if(A[ni]<vmax){
+            ll index = getIndexUpperBoundLong(values,A[ni]);
+            values[index] = A[ni];
         }else{
-            B[index] = A[ni];
+            values.push_back(A[ni]);
         }
     }
-    cout << cnt << endl;
+
+    cout << values.size() << endl;
+
+    
+
 }

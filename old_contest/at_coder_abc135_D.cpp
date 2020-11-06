@@ -1,14 +1,25 @@
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
+#include <map>
+#include <math.h>
+
 using namespace std;
 #include <vector>
-#define rep(i,n) for (int i = 0; i < (n) ; i++)
+#define rep(i,n) for (ll i = 0; i < (n) ; i++)
 #define INF 1e9
 #define llINF 1e18
+#define base10_4 10000      //1e4
+#define base10_5 100000     //1e5
+#define base10_6 1000000    //1e6
+#define base10_7 10000000   //1e7
+#define base10_8 100000000  //1e8
+#define base10_9 1000000000 //1e9
+
 #define MOD 1000000007
 #define pb push_back
 #define ll long long
+#define ld long double
 #define ull unsigned long long
 #define vint vector<int>
 #define vll vector<ll>
@@ -16,50 +27,76 @@ using namespace std;
 //#include <stack>
 //#include <queue>
 
-/*
-#include <math.h>
-int standerd = int(pow(10.0,9.0)) + 7;
-*/
+// #include <iomanip>
+//  cout << fixed << setprecision(15) << y << endl;
+
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
- 
-ll index[1000000][15]={};
 
+ll A;
+ll B;
+ll C;
+ll N;
+ll M;
+ll K;
+
+ll ltmp;
+string stmp;
+double dtmp;
+string S;
+
+ll dp[base10_6][14]={};
+ll getllSubstr(string s,ll start_index,ll length){
+    return atoi(s.substr(start_index,length).c_str());
+}
+void checkdp(){
+    cout << "--------------------" << endl;
+    for( ll index = 1 ; index <=S.size() ; index++ ){
+        for( ll amari = 0 ; amari <=12 ; amari++ ){
+            cout << dp[index][amari] << " ";
+        }
+        cout << endl;
+        cout << endl;
+    }
+    cout << "--------------------" << endl;
+
+}
 int main(){
 
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
 
-
-    string S;
+    
     cin >> S;
-    string Sn;
-    index[0][0]=1;
-    int cnt=1;
-    for( int si = 0 ; si < S.length() ;si++ ){
-        Sn = S.substr(si,1);
 
-        int target;
-        //cout << Sn << endl;
-        if(Sn=="?"){
-            rep(ii,10){
-                rep(jj,13){
-                    index[cnt][ (jj * 10 + ii)%13  ] += index[cnt-1][jj]; 
+    dp[0][0]=1;
+
+    rep(si,S.size()){
+        stmp = S.substr(si,1);
+        ll index = si + 1;
+        if(stmp=="?"){
+            for( ll vi = 0 ; vi <=9 ; vi++ ){
+                for( ll amari = 0 ; amari <=12 ; amari++ ){
+                    ll amari_new = (amari * 10 + vi) % 13;
+                    dp[index][amari_new] += dp[index-1][amari];                    
                 }
             }
         }else{
-            target =  atoi(Sn.c_str());
-            rep(jj,13){
-                index[cnt][ (jj * 10 + target) % 13  ] += index[cnt-1][jj]; 
+            ll vi = getllSubstr(S,si,1);
+            for( ll amari = 0 ; amari <=12 ; amari++ ){
+                ll amari_new = (amari * 10 + vi) % 13;
+                dp[index][amari_new] += dp[index-1][amari];                    
             }
         }
-        rep(jj,13){
-            index[cnt][jj] %= MOD;
+        for( ll amari = 0 ; amari <=12 ; amari++ ){
+            dp[index][amari] = (dp[index][amari]+MOD) % MOD;                    
         }
-        cnt++;
     }
-    cout << index[cnt-1][5] << endl;
 
-
+    //checkdp();
+    cout << dp[S.size()][5] << endl;
 
 }

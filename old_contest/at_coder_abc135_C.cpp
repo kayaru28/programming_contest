@@ -1,14 +1,25 @@
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
+#include <map>
+#include <math.h>
+
 using namespace std;
 #include <vector>
-#define rep(i,n) for (int i = 0; i < (n) ; i++)
+#define rep(i,n) for (ll i = 0; i < (n) ; i++)
 #define INF 1e9
 #define llINF 1e18
+#define base10_4 10000      //1e4
+#define base10_5 100000     //1e5
+#define base10_6 1000000    //1e6
+#define base10_7 10000000   //1e7
+#define base10_8 100000000  //1e8
+#define base10_9 1000000000 //1e9
+
 #define MOD 1000000007
 #define pb push_back
 #define ll long long
+#define ld long double
 #define ull unsigned long long
 #define vint vector<int>
 #define vll vector<ll>
@@ -16,60 +27,79 @@ using namespace std;
 //#include <stack>
 //#include <queue>
 
-/*
-#include <math.h>
-int standerd = int(pow(10.0,9.0)) + 7;
-*/
+// #include <iomanip>
+//  cout << fixed << setprecision(15) << y << endl;
+
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
- 
-ll A[10000000];
-ll B[10000000];
-ll cnt=0;
+
+vll A;
+vll B;
+ll C;
+ll N;
+ll M;
+ll K;
+
+ll ltmp;
+string stmp;
+double dtmp;
+ll llmin(ll a,ll b){
+    if(a>=b) return b;
+    return a;
+}
+ll llmax(ll a,ll b){
+    if(a<=b) return b;
+    return a;
+}
 
 int main(){
 
-    int N;
-    
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    ll sum0=0;
+
     cin >> N;
-
-    for( int ni = 0 ; ni <N+1 ; ni++ ){
-        cin >> A[ni];
+    rep(ni,N+1){
+        cin >> ltmp;
+        A.push_back(ltmp);
+        sum0+=ltmp;
     }
-    for( int ni = 0 ; ni <N ; ni++ ){
-        cin >> B[ni];
+    rep(ni,N){
+        cin >> ltmp;
+        B.push_back(ltmp);
     }
 
-    int beated;
-    int index;
-    index=0;
+    rep(ni,N){
+        if(A[ni]>=B[ni]){
+            A[ni]-=B[ni];
+            B[ni]-=B[ni];
+        }else{
+            B[ni]-=A[ni];
+            A[ni]-=A[ni];
+        }
 
-    beated = min(B[index],A[index]);
-    cnt+=beated;
-    B[index] -= beated;
-    A[index] -= beated;
+        if(A[ni+1]>=B[ni]){
+            A[ni+1]-=B[ni];
+            B[ni]-=B[ni];
+        }else{
+            B[ni]-=A[ni+1];
+            A[ni+1]-=A[ni+1];
+        }
+
+
+    }
+
+    ll sum1=0;
+
+    rep(ni,N+1){
+        sum1+=A[ni];
+    }
+
+    cout << sum0 - sum1 << endl;
     
-    for( index = 1 ; index <N ; index++ ){
-
-        beated = min(B[index-1],A[index]);
-        cnt+=beated;
-        B[index-1] -= beated;
-        A[index] -= beated;
-
-        beated = min(B[index],A[index]);
-        cnt+=beated;
-        B[index] -= beated;
-        A[index] -= beated;
-        
-    }
-    index = N;
-    beated = min(B[index-1],A[index]);
-    cnt+=beated;
-    B[index-1] -= beated;
-    A[index] -= beated;
-
-    cout << cnt << endl;
 
 }
