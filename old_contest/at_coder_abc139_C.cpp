@@ -1,14 +1,25 @@
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
+#include <map>
+#include <math.h>
+
 using namespace std;
 #include <vector>
-#define rep(i,n) for (int i = 0; i < (n) ; i++)
+#define rep(i,n) for (ll i = 0; i < (n) ; i++)
 #define INF 1e9
 #define llINF 1e18
+#define base10_4 10000      //1e4
+#define base10_5 100000     //1e5
+#define base10_6 1000000    //1e6
+#define base10_7 10000000   //1e7
+#define base10_8 100000000  //1e8
+#define base10_9 1000000000 //1e9
+
 #define MOD 1000000007
 #define pb push_back
 #define ll long long
+#define ld long double
 #define ull unsigned long long
 #define vint vector<int>
 #define vll vector<ll>
@@ -16,29 +27,46 @@ using namespace std;
 //#include <stack>
 //#include <queue>
 
-/*
-#include <math.h>
-int standerd = int(pow(10.0,9.0)) + 7;
-*/
+// #include <iomanip>
+//  cout << fixed << setprecision(15) << y << endl;
+
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
- 
-int N;
 
+vll A;
+ll B;
+ll C;
+ll N;
+ll M;
+ll K;
+
+ll ltmp;
+string stmp;
+double dtmp;
 
 int main(){
 
-    int A,B;
-    cin >> A;
-    cin >> B;
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
 
-    int cnt = 1;
-
-    if(B==1) cout << 0 << endl;
-    else{
-        cout << (B-2) / (A-1) + 1 << endl;
+    cin >> N;
+    ll cmax = 0;
+    ll cnt = 0;
+    rep(ni,N){
+        cin >> ltmp;
+        A.push_back(ltmp);
     }
+
+    for( ll ni = 1 ; ni <N ; ni++ ){
+        if(A[ni]<=A[ni-1]) cnt++;
+        else cnt = 0;
+        if(cnt>cmax) cmax = cnt;
+    }
+    cout << cmax << endl;
+
+    
 
 }
