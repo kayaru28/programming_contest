@@ -1,14 +1,25 @@
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
+#include <map>
+#include <math.h>
+
 using namespace std;
 #include <vector>
-#define rep(i,n) for (int i = 0; i < (n) ; i++)
+#define rep(i,n) for (ll i = 0; i < (n) ; i++)
 #define INF 1e9
 #define llINF 1e18
+#define base10_4 10000      //1e4
+#define base10_5 100000     //1e5
+#define base10_6 1000000    //1e6
+#define base10_7 10000000   //1e7
+#define base10_8 100000000  //1e8
+#define base10_9 1000000000 //1e9
+
 #define MOD 1000000007
 #define pb push_back
 #define ll long long
+#define ld long double
 #define ull unsigned long long
 #define vint vector<int>
 #define vll vector<ll>
@@ -16,60 +27,73 @@ using namespace std;
 //#include <stack>
 //#include <queue>
 
-/*
-#include <math.h>
-int standerd = int(pow(10.0,9.0)) + 7;
-*/
+// #include <iomanip>
+//  cout << fixed << setprecision(15) << y << endl;
+
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
- 
+
+ll A;
+ll B;
+ll C;
 ll N;
-ll NN;
+ll M;
+ll K;
+
+ll ltmp;
+string stmp;
+double dtmp;
+string S;
 
 int main(){
 
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
     cin >> N;
-    int K;
     cin >> K;
-
-    string S;
+    
     cin >> S;
+    string base = S.substr(0,1);
+    string opt;
+    opt = "L";
+    if(base == "L") opt = "R";
 
-    int Flag[N+100];
-    int Fsum[N+100];
-    int tmp[N+100];
-    int cnt=0;
-    rep(i,N){
-        if(S.substr(i,1)=="L")  Flag[i+1] = -1;
-        else Flag[i+1] = 1;
-        cnt += Flag[i+1];
-    }
-    if(N==1) cout << 0 << endl;
-    else if(N==2) cout << 1 << endl;
-    else if(cnt==-N || cnt == N) cout << N-1 << endl;
-    else{
-        int ans=0;
-        int minus = 0;
-        int plus = 0;
-        for( int i = 1 ; i <N ; i++ ){
-            Fsum[i] = Flag[i] - Flag[i+1];
-            if(Fsum[i]==0) ans++;
-            else if(Fsum[i]==2) plus++;
-            else if(Fsum[i]==-2) minus++;
+    string li = base + opt;
+    string ri = opt + base;
+
+    ll cntK = 0;
+    ll get = 0;
+    ll index = 0;
+    while(index+1 < N){
+        stmp = S.substr(index,2);
+        if(stmp==li){
+            get++;
+            index++;
+            while(index+1 < N){
+                stmp = S.substr(index,2);
+                if(stmp==ri){
+                    get++;
+                    break;
+                }
+                index++;
+            }
+            cntK++;
         }
-
-        int sousa=0;
-        //cout << ans << endl;
-        //cout << plus << endl;
-        //cout << minus << endl;
-        sousa = min(plus,minus);
-        if(K>sousa){
-            ans += sousa*2;
-            ans += min(K-sousa,abs(plus-minus));
-        }else ans += K * 2;
-
-        cout << ans << endl;
+        if(cntK == K ) break;
+        index++;
     }
+
+    ll ans = 0;
+    rep(ni,N-1){
+        if(S.substr(ni,1) == S.substr(ni+1,1)) ans++;
+    }
+
+    ans += get;
+    cout << ans << endl;
+    
+
 }
