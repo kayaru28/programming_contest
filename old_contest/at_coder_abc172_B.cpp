@@ -19,7 +19,6 @@ using namespace std;
 #define MOD 1000000007
 #define pb push_back
 #define ll long long
-#define ld long double
 #define ull unsigned long long
 #define vint vector<int>
 #define vll vector<ll>
@@ -27,16 +26,13 @@ using namespace std;
 //#include <stack>
 //#include <queue>
 
-// #include <iomanip>
-//  cout << fixed << setprecision(15) << y << endl;
-
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
 
 ll A;
-vll B;
+ll B;
 ll C;
 ll N;
 ll M;
@@ -45,15 +41,7 @@ ll K;
 ll ltmp;
 string stmp;
 double dtmp;
-ll ans = 0;
-ll llmin(ll a,ll b){
-    if(a>=b) return b;
-    return a;
-}
-ll llmax(ll a,ll b){
-    if(a<=b) return b;
-    return a;
-}
+
 int main(){
 
     ios::sync_with_stdio(false);
@@ -61,20 +49,14 @@ int main(){
     cout.tie(0);
 
 
-    cin >> N;
-
-    B.push_back(base10_6);
-    rep(ni,N-1){
-        cin>>ltmp;
-        B.push_back(ltmp);
+    string S;
+    cin >> S;
+    string T;
+    cin >> T;
+    ll cnt=0;
+    rep(si,S.size()){
+        if(S.substr(si,1)!=T.substr(si,1)) cnt++;
     }
-    B.push_back(base10_6);
-
-    rep(ni,N){
-        ans += llmin(B[ni],B[ni+1]);
-    }
-    cout << ans << endl;
-    
-    
+    cout << cnt << endl;
 
 }
