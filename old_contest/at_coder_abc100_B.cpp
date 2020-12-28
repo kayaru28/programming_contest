@@ -1,36 +1,78 @@
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
+#include <map>
+#include <math.h>
+
 using namespace std;
 #include <vector>
+#define rep(i,n) for (ll i = 0; i < (n) ; i++)
+#define INF 1e9
+#define llINF 1e18
+#define base10_4 10000      //1e4
+#define base10_5 100000     //1e5
+#define base10_6 1000000    //1e6
+#define base10_7 10000000   //1e7
+#define base10_8 100000000  //1e8
+#define base10_9 1000000000 //1e9
+
+#define MOD 1000000007
+#define pb push_back
+#define ll long long
+#define ld long double
+#define ull unsigned long long
+#define vint vector<int>
+#define vll vector<ll>
+
 //#include <stack>
 //#include <queue>
 
-/*
-#include <math.h>
-int standerd = int(pow(10.0,9.0)) + 7;
-*/
+// #include <iomanip>
+//  cout << fixed << setprecision(15) << y << endl;
+
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
- 
+
+ll A;
+ll B;
+ll C;
+ll N;
+ll M;
+ll K;
+
+ll ltmp;
+string stmp;
+double dtmp;
+
+vll x[4];
 
 int main(){
 
-    int D;
-    int N;
-    
-    cin >> D;
-    cin >> N;
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
 
-    int bet = 1;
-    for( int di = 0 ; di < D ; di++ ){
-        bet = bet * 100;
+    cin >> A;
+    cin >> B;
+
+    for( ll xi = 0 ; xi <=2 ; xi++ ){
+        ll base = pow(100,xi);
+        ll ni = 1;
+        ll cnt = 1;
+        while(ni<=101){
+            if(cnt % 100 > 0){
+
+                x[xi].push_back(cnt*base);
+                ni++;
+            }
+            cnt++;
+
+        }
     }
 
-    if(N<100)    cout << bet * N << endl;
-    else    cout << bet * (N + 1) << endl;
-    
+
+    cout << x[A][B-1] << endl;    
 
 }
