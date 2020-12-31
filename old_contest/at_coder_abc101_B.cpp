@@ -1,36 +1,73 @@
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
+#include <map>
+#include <math.h>
+
 using namespace std;
 #include <vector>
+#define rep(i,n) for (ll i = 0; i < (n) ; i++)
+#define INF 1e9
+#define llINF 1e18
+#define base10_4 10000      //1e4
+#define base10_5 100000     //1e5
+#define base10_6 1000000    //1e6
+#define base10_7 10000000   //1e7
+#define base10_8 100000000  //1e8
+#define base10_9 1000000000 //1e9
+
+#define MOD 1000000007
+#define pb push_back
+#define ll long long
+#define ld long double
+#define ull unsigned long long
+#define vint vector<int>
+#define vll vector<ll>
+
 //#include <stack>
 //#include <queue>
 
-/*
-#include <math.h>
-int standerd = int(pow(10.0,9.0)) + 7;
-*/
+// #include <iomanip>
+//  cout << fixed << setprecision(15) << y << endl;
+
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
 string ans_yes = "yes"; 
 string ans_no = "no"; 
- 
+
+ll A;
+ll B;
+ll C;
+ll N;
+ll M;
+ll K;
+
+ll ltmp;
+string stmp;
+double dtmp;
+
+ll getllSubstr(string s,ll start_index,ll length){
+    return atoi(s.substr(start_index,length).c_str());
+}
 
 int main(){
 
-    int N;
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
     cin >> N;
+ 
+    string S;
+    S = to_string(N);
 
-    if(N==1) cout << ans_Yes;
-    else{
-        int base = 1;
-        int Sn = 0;
-        while(base <= N){
-            base = base * 10;
-            Sn +=  ( N % base ) / (base / 10);
-        }
-
-        if(N%Sn==0)    cout << ans_Yes;
-        else cout << ans_No;
+    ll waru = 0;
+    rep(si,S.size()){
+        ltmp = getllSubstr(S,si,1);
+        waru += ltmp;
     }
+
+    if(N % waru==0) cout << "Yes" << endl;
+    else cout << "No" << endl;
+
 }
