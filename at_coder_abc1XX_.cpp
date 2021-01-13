@@ -1,8 +1,19 @@
-#include  <iostream>
-#include  <stdio.h>
-#include <algorithm>
-#include <map>
-#include <math.h>
+#include<iostream>
+#include<string>
+#include<algorithm>
+#include<vector>
+#include<iomanip>
+#include<math.h>
+#include<complex>
+#include<queue>
+#include<deque>
+#include<stack>
+#include<map>
+#include<set>
+#include<bitset>
+#include<functional>
+#include<assert.h>
+#include<numeric>
 
 using namespace std;
 #include <vector>
@@ -29,6 +40,12 @@ using namespace std;
 
 // #include <iomanip>
 //  cout << fixed << setprecision(15) << y << endl;
+
+/*
+sort(ord.begin(),ord.end(),[&](int x, int y){
+    return p[x]>p[y];
+});
+*/
 
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
