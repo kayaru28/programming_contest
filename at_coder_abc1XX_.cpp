@@ -16,8 +16,8 @@
 #include<numeric>
 
 using namespace std;
-#include <vector>
 #define rep(i,n) for (ll i = 0; i < (n) ; i++)
+#define vsort(v) sort(v.begin(),v.end())
 #define INF 1e9
 #define llINF 1e18
 #define base10_4 10000      //1e4
