@@ -1,23 +1,15 @@
-#include<iostream>
-#include<string>
-#include<algorithm>
-#include<vector>
-#include<iomanip>
-#include<math.h>
-#include<complex>
-#include<queue>
-#include<deque>
-#include<stack>
-#include<map>
-#include<set>
-#include<bitset>
-#include<functional>
-#include<assert.h>
-#include<numeric>
+
+
+
+#include  <iostream>
+#include  <stdio.h>
+#include <algorithm>
+#include <map>
+#include <math.h>
 
 using namespace std;
+#include <vector>
 #define rep(i,n) for (ll i = 0; i < (n) ; i++)
-#define vsort(v) sort(v.begin(),v.end())
 #define INF 1e9
 #define llINF 1e18
 #define base10_4 10000      //1e4
@@ -34,18 +26,16 @@ using namespace std;
 #define ull unsigned long long
 #define vint vector<int>
 #define vll vector<ll>
+#define vvll vector<vector<ll>>
+#define vstr vector<string>
+#define vvstr vector<vector<string>>
+
 
 //#include <stack>
 //#include <queue>
 
 // #include <iomanip>
 //  cout << fixed << setprecision(15) << y << endl;
-
-/*
-sort(ord.begin(),ord.end(),[&](int x, int y){
-    return p[x]>p[y];
-});
-*/
 
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
