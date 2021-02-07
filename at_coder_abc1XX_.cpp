@@ -53,6 +53,7 @@ ll ltmp;
 string stmp;
 double dtmp;
 
+
 int main(){
 
     ios::sync_with_stdio(false);
