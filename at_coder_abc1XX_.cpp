@@ -53,7 +53,7 @@ ll ltmp;
 string stmp;
 double dtmp;
 
-
+double double_hosei = 1000000; //求められる精度分補正をかけておく
 int main(){
 
     ios::sync_with_stdio(false);

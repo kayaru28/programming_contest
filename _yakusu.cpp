@@ -87,6 +87,8 @@ void getYakusu(ll N){
     sort(yakusu.begin(),yakusu.end());
 }
 
+
+
 int main(){
 
     ios::sync_with_stdio(false);
