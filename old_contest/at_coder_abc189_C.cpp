@@ -42,21 +42,16 @@ string ans_No = "No";
 string ans_yes = "yes"; 
 string ans_no = "no"; 
 
-ll A;
+vll A;
 ll B;
 ll C;
 ll N;
 ll M;
 ll K;
-ll T;
-ll X;
-ll Y;
-ll Z;
 
 ll ltmp;
 string stmp;
 double dtmp;
-
 ll llmin(ll a,ll b){
     if(a>=b) return b;
     return a;
@@ -66,24 +61,29 @@ ll llmax(ll a,ll b){
     return a;
 }
 
-double double_hosei = 1000000; //求められる精度分補正をかけておく
 int main(){
 
     ios::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
 
-    cin >> A;
-    cin >> B;
-    cin >> C;
     cin >> N;
-    cin >> M;
-    cin >> K;
+    A.resize(N);
+    rep(ni,N){
+        cin >> A[ni];
+    }
 
-    string S;
-    
-    cin >> S;
+    ll ans = 0;
+    for( ll li =0 ; li <N ; li++ ){
+        ll Amin=llINF;
+        for( ll x = 1 ; x <=N ; x++ ){
+            ll ri = li+x-1;
+            if(ri>=N) break;
+            Amin = llmin(A[ri],Amin);
+            ans = llmax(ans,Amin*x);
 
-    
+        }
+    }
+    cout << ans << endl;    
 
 }
