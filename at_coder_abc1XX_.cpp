@@ -6,9 +6,11 @@
 #include <algorithm>
 #include <map>
 #include <math.h>
+#include <queue>
+#include <vector>
+
 
 using namespace std;
-#include <vector>
 #define rep(i,n) for (ll i = 0; i < (n) ; i++)
 #define INF 1e9
 #define llINF 1e18
@@ -36,6 +38,8 @@ using namespace std;
 
 // #include <iomanip>
 //  cout << fixed << setprecision(15) << y << endl;
+
+// for(char c : S)
 
 string ans_Yes = "Yes"; 
 string ans_No = "No"; 
