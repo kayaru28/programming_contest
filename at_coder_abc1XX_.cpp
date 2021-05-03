@@ -8,7 +8,9 @@
 #include <math.h>
 #include <queue>
 #include <vector>
-
+#include <stack>
+#include <set>
+#include <bitset>
 
 using namespace std;
 #define rep(i,n) for (ll i = 0; i < (n) ; i++)
@@ -33,26 +35,34 @@ using namespace std;
 #define vvstr vector<vector<string>>
 
 
-//#include <stack>
-//#include <queue>
+
 
 // #include <iomanip>
 //  cout << fixed << setprecision(15) << y << endl;
 
 // for(char c : S)
 
-string ans_Yes = "Yes"; 
-string ans_No = "No"; 
-string ans_yes = "yes"; 
-string ans_no = "no"; 
+//min({a1, a2, ..., an})
+//max({a1, a2, ..., an})
+//swap(a, b)
+//S.substr(si)
+// sort <--> reverse
+//count(v.begin(), v.end(), x) 
+
+//xを2進数にした時の1の数
+//__builtin_popcount(x) 
+//__builtin_popcountll(x) 
 
 ll A;
 ll B;
 ll C;
+ll D;
 ll N;
 ll M;
 ll K;
 ll T;
+ll H;
+ll W;
 ll X;
 ll Y;
 ll Z;

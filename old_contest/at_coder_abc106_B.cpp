@@ -1,11 +1,18 @@
+
+
+
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
 #include <map>
 #include <math.h>
+#include <queue>
+#include <vector>
+#include <stack>
+#include <set>
+#include <bitset>
 
 using namespace std;
-#include <vector>
 #define rep(i,n) for (ll i = 0; i < (n) ; i++)
 #define INF 1e9
 #define llINF 1e18
@@ -23,58 +30,68 @@ using namespace std;
 #define ull unsigned long long
 #define vint vector<int>
 #define vll vector<ll>
+#define vvll vector<vector<ll>>
+#define vstr vector<string>
+#define vvstr vector<vector<string>>
 
-//#include <stack>
-//#include <queue>
+
+
 
 // #include <iomanip>
 //  cout << fixed << setprecision(15) << y << endl;
 
-string ans_Yes = "Yes"; 
-string ans_No = "No"; 
-string ans_yes = "yes"; 
-string ans_no = "no"; 
+// for(char c : S)
 
+//min({a1, a2, ..., an})
+//max({a1, a2, ..., an})
+//swap(a, b)
+//S.substr(si)
+// sort <--> reverse
+//count(v.begin(), v.end(), x) 
 
+//xを2進数にした時の1の数
+//__builtin_popcount(x) 
+//__builtin_popcountll(x) 
 
 ll A;
 ll B;
 ll C;
+ll D;
 ll N;
 ll M;
 ll K;
+ll T;
+ll H;
+ll W;
+ll X;
+ll Y;
+ll Z;
 
 ll ltmp;
 string stmp;
 double dtmp;
 
-vector<pair<ll,ll>> factors;
-#include <queue>
-void getPrimeFactorize(ll n_max) {
-    for (long long a = 2; a * a <= n_max; ++a) {
-        if (n_max % a != 0) continue;
-        long long ex = 0; // 指数
+ll llmin(ll a,ll b){
+    if(a>=b) return b;
+    return a;
+}
+ll llmax(ll a,ll b){
+    if(a<=b) return b;
+    return a;
+}
 
-        // 割れる限り割り続ける
-        while (n_max % a == 0) {
-            ++ex;
-            n_max /= a;
+vll yakusu;
+void getYakusu(ll N){
+    yakusu.clear();
+    for( ll ni = 1 ; ni*ni <=N ; ni++ ){
+        if(N%ni==0){
+            yakusu.push_back(ni);
+            if(N/ni!=ni) yakusu.push_back(N/ni);
         }
-
-        // その結果を push
-        factors.push_back({a, ex});
     }
-
-    // 最後に残った数について
-    if (n_max != 1) factors.push_back({n_max, 1});
+    sort(yakusu.begin(),yakusu.end());
 }
-void checkval(ll fi){
-    cout << factors[fi].first << " " << factors[fi].second;
-    cout << endl;
-
-}
-
-
+double double_hosei = 1000000; //求められる精度分補正をかけておく
 int main(){
 
     ios::sync_with_stdio(false);
@@ -82,25 +99,15 @@ int main(){
     cout.tie(0);
 
     cin >> N;
-    ll anscnt=0;
-    rep(ni,N+1){
+    ll ans = 0;
+    for( ll ni = 1 ; ni <=N ; ni++ ){
         if(ni%2==1){
-            factors.clear();
-
-            getPrimeFactorize(ni);
-            ll tmpcnt=1;
-            rep(fi,factors.size()){
-                tmpcnt *= (factors[fi].second+1);
-            }
-            //cout << ni << " " << tmpcnt << endl;
-            if(tmpcnt==8) anscnt++;
-
-
+            getYakusu(ni);
+            if(yakusu.size()==8) ans++;
         }
-
-
-
     }
+    cout << ans << endl;
 
-    cout << anscnt << endl;
+    
+
 }
