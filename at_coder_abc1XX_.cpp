@@ -14,6 +14,8 @@
 
 using namespace std;
 #define rep(i,n) for (ll i = 0; i < (n) ; i++)
+#define repRangeInc(i,s,n) for (ll i = (s); i <= (n) ; i++)
+#define repRangeDec(i,s,n) for (ll i = (s); i >= (n) ; i--)
 #define INF 1e9
 #define llINF 1e18
 #define base10_4 10000      //1e4
@@ -33,6 +35,7 @@ using namespace std;
 #define vvll vector<vector<ll>>
 #define vstr vector<string>
 #define vvstr vector<vector<string>>
+typedef pair<ll,ll> P;  
 
 
 
