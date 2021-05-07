@@ -82,6 +82,12 @@ ll llmax(ll a,ll b){
     if(a<=b) return b;
     return a;
 }
+P shihou[4] = {
+    P(  0 ,  1),
+    P(  0 , -1),
+    P(  1 ,  0),
+    P( -1 ,  0)
+};
 
 double double_hosei = 1000000; //求められる精度分補正をかけておく
 int main(){
