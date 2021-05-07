@@ -73,8 +73,7 @@ ll W;
 ll X;
 ll Y;
 ll Z;
-vvll hw;
-map<ll,P> map_number;
+
 string S;
 
 ll ltmp;
