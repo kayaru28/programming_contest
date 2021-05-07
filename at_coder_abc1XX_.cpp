@@ -14,8 +14,10 @@
 
 using namespace std;
 #define rep(i,n) for (ll i = 0; i < (n) ; i++)
-#define repRangeInc(i,s,n) for (ll i = (s); i <= (n) ; i++)
-#define repRangeDec(i,s,n) for (ll i = (s); i >= (n) ; i--)
+#define rep2(i,n,i2,n2) for (ll i = 0; i < (n) ; i++) for (ll i2 = 0; i2 < (n2) ; i2++)
+#define incRepFT(i,s,n) for (ll i = (s); i <= (n) ; i++)
+#define decRepFT(i,s,n) for (ll i = (s); i >= (n) ; i--)
+
 #define INF 1e9
 #define llINF 1e18
 #define base10_4 10000      //1e4
@@ -51,6 +53,8 @@ typedef pair<ll,ll> P;
 //S.substr(si)
 // sort <--> reverse
 //count(v.begin(), v.end(), x) 
+// char t - 'a'
+// char t - '0'
 
 //xを2進数にした時の1の数
 //__builtin_popcount(x) 
@@ -69,6 +73,9 @@ ll W;
 ll X;
 ll Y;
 ll Z;
+vvll hw;
+map<ll,P> map_number;
+string S;
 
 ll ltmp;
 string stmp;
@@ -82,13 +89,10 @@ ll llmax(ll a,ll b){
     if(a<=b) return b;
     return a;
 }
-P shihou[4] = {
-    P(  0 ,  1),
-    P(  0 , -1),
-    P(  1 ,  0),
-    P( -1 ,  0)
+P d_move[4] = {
+    P(0 , 1),P(0 , -1),P(1 , 0),P(-1 , 0)//,P(1 , 1),P(1 , -1),P(-1 , 1),P(-1 , -1)
 };
-//for(P drc : shihou)
+//for(P drc : d_move)
 
 double double_hosei = 1000000; //求められる精度分補正をかけておく
 int main(){
@@ -100,14 +104,17 @@ int main(){
     cin >> A;
     cin >> B;
     cin >> C;
+    cin >> D;
     cin >> N;
     cin >> M;
     cin >> K;
+    cin >> T;
+    cin >> H;
+    cin >> W;
+    cin >> X;
+    cin >> Y;
+    cin >> Z;
 
-    string S;
-    
     cin >> S;
-
-    
 
 }
