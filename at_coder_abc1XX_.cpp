@@ -88,6 +88,7 @@ P shihou[4] = {
     P(  1 ,  0),
     P( -1 ,  0)
 };
+//for(P drc : shihou)
 
 double double_hosei = 1000000; //求められる精度分補正をかけておく
 int main(){
