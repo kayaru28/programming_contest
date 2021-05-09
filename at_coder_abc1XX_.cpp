@@ -100,19 +100,8 @@ int main(){
     cin.tie(0);
     cout.tie(0);
 
-    cin >> A;
-    cin >> B;
-    cin >> C;
-    cin >> D;
     cin >> N;
-    cin >> M;
     cin >> K;
-    cin >> T;
-    cin >> H;
-    cin >> W;
-    cin >> X;
-    cin >> Y;
-    cin >> Z;
 
     cin >> S;
 
