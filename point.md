@@ -54,5 +54,11 @@
 |区間 DP|制約の区間(左端と右端)を軸とするDPテーブル|JOI2015_D|
 |bit DP|選択肢の順列の順序を軸とするDPテーブル|JOI2017_D|
 
+<br>
+<br>
+
+### 論理演算
+A xor B xor C = (A xor B) xor C
+A xor B xor C = A xor B xor C xor X xor X = (A xor X) xor (B xor C xor X)
 
 https://zero-kpr.hatenablog.com/entry/2020/01/17/084434
