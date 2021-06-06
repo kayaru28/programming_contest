@@ -56,6 +56,16 @@
 |区間 DP|制約の区間(左端と右端)を軸とするDPテーブル|JOI2015_D|
 |bit DP|選択肢の順列の順序を軸とするDPテーブル|JOI2017_D|
 
+#### 典型問題
+部分和問題・・・数列からいくつか選んだ和をXにすることができるか
+部分和数え上げ問題・・・数列からいくつか選んだ和をXとなる方法が何通りあるか
+最小個数部分和問題・・・数列からいくつか選んだ和をXとなる方法の内、選ぶ整数の個数が最小となる個数が何通りか
+最長共通部分列問題・・・二つの文字列の共通の部分文字列となる文字列の長さの最大値
+最小コスト弾性マッチング問題・・・
+レーベンシュタイン距離・・・S の ii 文字目までを変換して、TT の jj 文字目までへと変換するための最小操作回数
+区間を分割する問題
+
+
 <br>
 <br>
 ### その他数の概念
@@ -71,3 +81,20 @@ A xor B xor C = (A xor B) xor C
 A xor B xor C = A xor B xor C xor X xor X = (A xor X) xor (B xor C xor X)
 
 https://zero-kpr.hatenablog.com/entry/2020/01/17/084434
+
+
+
+## program
+### 部分和　数列Vsの部分和がとる全パターンを求めるDP
+#define all_val_sum 100001
+bitset<all_val_sum> xbit;
+void calc_part_sum_dp(){
+    xbit[0]=1;
+    for(ll vi : Vs){
+        for( ll ki = all_val_sum-vi ; ki >=0 ; ki-- ){
+            xbit[ki+vi] = xbit[ki+vi] | xbit[ki];
+        }
+        //cout << xbit.to_string() << endl;
+    }    
+}
+
