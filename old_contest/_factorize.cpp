@@ -47,7 +47,9 @@ double dtmp;
 
 vector<pair<ll,ll>> factors;
 #include <queue>
+ll factors_maxsize;
 void getPrimeFactorize(ll n_max) {
+    factors.clear();
     for (long long a = 2; a * a <= n_max; ++a) {
         if (n_max % a != 0) continue;
         long long ex = 0; // 指数

@@ -64,7 +64,7 @@
 最小コスト弾性マッチング問題・・・
 レーベンシュタイン距離・・・S の ii 文字目までを変換して、TT の jj 文字目までへと変換するための最小操作回数
 区間を分割する問題
-
+特定区間を最大公約数でグルーピング（下記にprogramあり）
 
 <br>
 <br>
@@ -103,4 +103,18 @@ void calc_part_sum_dp(){
         //cout << xbit.to_string() << endl;
     }    
 }
-
+### 特定範囲内の数列値を最大公約数ごとのグループにわける
+vll same_gcd_pairs;
+void getSameGcdPairs(ll n_max,ll n_min){
+    rep(ni,n_max+1) same_gcd_pairs.push_back(0); 
+    for( ll gcdvar = n_max ; gcdvar >=2 ; gcdvar--){
+        ll cnt_baisu = n_max/gcdvar - (n_min-1)/gcdvar;
+        same_gcd_pairs[gcdvar] = llmax(0,cnt_baisu * (cnt_baisu-1)/2);
+        ll kakeru = 2;
+        while(gcdvar * kakeru <= n_max){
+            ll baisu_gcdvar = gcdvar * kakeru;
+            same_gcd_pairs[gcdvar] -= same_gcd_pairs[baisu_gcdvar];
+            kakeru++;
+        }
+    }
+}
