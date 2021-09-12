@@ -1,12 +1,23 @@
+
+
+
 #include  <iostream>
 #include  <stdio.h>
 #include <algorithm>
 #include <map>
 #include <math.h>
+#include <queue>
+#include <vector>
+#include <stack>
+#include <set>
+#include <bitset>
 
 using namespace std;
-#include <vector>
 #define rep(i,n) for (ll i = 0; i < (n) ; i++)
+#define rep2(i,n,i2,n2) for (ll i = 0; i < (n) ; i++) for (ll i2 = 0; i2 < (n2) ; i2++)
+#define incRepFT(i,s,n) for (ll i = (s); i <= (n) ; i++)
+#define decRepFT(i,s,n) for (ll i = (s); i >= (n) ; i--)
+
 #define INF 1e9
 #define llINF 1e18
 #define base10_4 10000      //1e4
@@ -19,30 +30,56 @@ using namespace std;
 #define MOD 1000000007
 #define pb push_back
 #define ll long long
+#define ld long double
 #define ull unsigned long long
 #define vint vector<int>
 #define vll vector<ll>
+#define vvll vector<vector<ll>>
+#define vstr vector<string>
+#define vvstr vector<vector<string>>
+typedef pair<ll,ll> P;  
 
-//#include <stack>
-//#include <queue>
+
+
 
 // #include <iomanip>
 //  cout << fixed << setprecision(15) << y << endl;
 
-string ans_Yes = "Yes"; 
-string ans_No = "No"; 
-string ans_yes = "yes"; 
-string ans_no = "no"; 
+// for(char c : S)
+
+//min({a1, a2, ..., an})
+//max({a1, a2, ..., an})
+//swap(a, b)
+//S.substr(si)
+// sort <--> reverse
+//count(v.begin(), v.end(), x) 
+// char t - 'a'
+// char t - '0'
+
+//xを2進数にした時の1の数
+//__builtin_popcount(x) 
+//__builtin_popcountll(x) 
 
 ll A;
 ll B;
-vll P;
-vll C;
+ll C;
+ll D;
 ll N;
+ll M;
 ll K;
+ll T;
+ll H;
+ll W;
+ll X;
+ll Y;
+ll Z;
+
+string S;
+
 ll ltmp;
 string stmp;
 double dtmp;
+
 ll llmin(ll a,ll b){
     if(a>=b) return b;
     return a;
@@ -51,28 +88,79 @@ ll llmax(ll a,ll b){
     if(a<=b) return b;
     return a;
 }
+P d_move[4] = {
+    P(0 , 1),P(0 , -1),P(1 , 0),P(-1 , 0)//,P(1 , 1),P(1 , -1),P(-1 , 1),P(-1 , -1)
+};
+//for(P drc : d_move)
+vll Ps;
+vll Cs;
+ll ans = -1 * llINF;
 
-ll roopsum[5100]={};
-ll roopcnt[5100]={};
-ll roopcycle[5100]={}
-ll roopS[5100]={}
+void getans(ll starti){
+    ll visited[N] = {};
+    ll score[N] = {};
 
-map<ll,ll> belong_map;
+    ll nexti;
+    ll tmpmax  = -1 * llINF;;
+    ll scorei = 0;
+    ll cnt = 1;
+    nexti = Ps[starti];
+    while(visited[nexti]==0){
+        visited[nexti]=cnt;
+        scorei += Cs[nexti];
+        score[nexti] = scorei;
+        tmpmax = llmax(tmpmax,scorei);
 
-/*
-max 448,000,000
-map<string,ll> count_map;
-count_map['0']=0;
-for(auto x : count_map) {
-    string key = x.first;
-    ll value = x.second;
+        cnt++;
+        nexti = Ps[nexti];
+    }
+    scorei += Cs[nexti];
+    ll diff = scorei - score[nexti];
+    ll cyclei = cnt - visited[nexti];
+
+    while(score[nexti]!=tmpmax){
+        nexti = Ps[nexti];
+    }
+    ll cntbase = visited[nexti];
+    
+    //cout << "---------------------" << endl;
+    //cout << "cn " << cnt << endl;
+    if(diff>0){
+        ll leftK = K - visited[nexti];
+        ll roopi = leftK/cyclei;
+        tmpmax += diff * roopi;
+
+        cntbase += (cyclei * roopi);
+
+        /*
+        cout << "st " << starti << endl;
+        cout << "ne " << nexti << endl;
+        cout << "df " << diff << endl;
+        cout << "le " << leftK << endl;
+        cout << "cy " << cyclei << endl;
+        cout << "ro " << roopi << endl;
+        cout << "vi " << visited[nexti] << endl;
+        cout << "cb " << cntbase << endl;
+        cout << "sc " << score[nexti] << endl;
+        cout << tmpmax << endl;
+        */
+
+        scorei = tmpmax;
+        while(cntbase + 1 <= K){
+            nexti = Ps[nexti];
+            scorei += Cs[nexti];
+            cntbase++;
+            tmpmax = llmax(tmpmax,scorei);
+            //cout << cntbase << " " << K << " " << tmpmax << endl;
+        }
+    }
+    
+
+    //cout << tmpmax << endl;
+    ans = llmax(ans,tmpmax);
 }
-*/
 
-vll blist[5010];
-ll fulbal[5010];
-ll befP[5010];
-
+double double_hosei = 1000000; //求められる精度分補正をかけておく
 int main(){
 
     ios::sync_with_stdio(false);
@@ -82,67 +170,16 @@ int main(){
     cin >> N;
     cin >> K;
 
-    ll Csum=0;
+    Ps.resize(N);
+    Cs.resize(N);
+    rep(ni,N) cin >> Ps[ni];
+    rep(ni,N) Ps[ni]--;
+    rep(ni,N) cin >> Cs[ni];
 
     rep(ni,N){
-        cin >> ltmp;
-        ltmp--;
-        P.push_back(ltmp);
-    }
-    rep(ni,N){
-        cin >> ltmp;
-        Csum+=ltmp;
-        C.push_back(ltmp);
-    }
-
-    ll bi = 0;
-    for( ll si = 0 ; si <=N-1 ; si++ ){
-        ll index = P[si];
-        befP[index] = si;
-        if(belong_map.count(index)==0){
-            while(belong_map.count(index)==0){
-                blist.push_back(index);
-                belong_map[index]=bi;
-                befP[P[index]] = index;
-                index = P[index];
-            }
-            bi++;
-        }
-    }
-
-    for( ll li = 0 ; li <blist.size() ; li++ ){
-        ll listmax = 0
-
-
-
-
-    }
-
-
-
-
-
-    ll ans=C[0];
-    for( ll si = 0 ; si <=N-1 ; si++ ){
-        ll index = P[si];
-        ll bi = belong_map[index];
-        ll roopnum = K / roopcnt[bi];
-        roopnum = llmax(0,roopnum-1);
-        if(roopsum[bi]<0) roopnum=0;
-
-        ll tmp = roopnum * roopsum[bi];
-        //cout << roopnum << " " << roopsum[bi] << endl;
-        ll tmpK = K - roopcnt[bi] * roopnum;
-
-        ll ki = 1;
-        index = P[si];
-        while( ki <=tmpK){
-            tmp += C[index];
-            ans = llmax(tmp,ans);
-            index = P[index];
-            ki++;
-        }
+        getans(ni);
     }
     cout << ans << endl;
+
 
 }
