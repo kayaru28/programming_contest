@@ -73,9 +73,8 @@ ll W;
 ll X;
 ll Y;
 ll Z;
-vll As,Bs;
 
-string S;
+string As,Bs;
 
 ll ltmp;
 string stmp;
@@ -93,7 +92,9 @@ P d_move[4] = {
     P(0 , 1),P(0 , -1),P(1 , 0),P(-1 , 0)//,P(1 , 1),P(1 , -1),P(-1 , 1),P(-1 , -1)
 };
 //for(P drc : d_move)
-
+ll getllSubstr(string s,ll start_index,ll length){
+    return atoi(s.substr(start_index,length).c_str());
+}
 double double_hosei = 1000000; //求められる精度分補正をかけておく
 int main(){
 
@@ -101,12 +102,23 @@ int main(){
     cin.tie(0);
     cout.tie(0);
 
-    cin >> N;
     cin >> K;
+    
+    cin >> As >> Bs;
 
-    As.resize(N);
-    rep(ni,N) cin >> As[ni];
+    A = 0;
+    ll ind;
 
-    cin >> S;
+    for( ll si = 0 ; si <As.size() ; si++ ){
+        A *= K;
+        A += getllSubstr(As,si,1);
+    }
+    B=0;
+    for( ll si = 0 ; si <Bs.size() ; si++ ){
+        B *= K;
+        B += getllSubstr(Bs,si,1);
+    }
+    ll ans = A*B;
+    cout << ans << endl;
 
 }

@@ -46,6 +46,7 @@
 |Bellman-Ford | 負の値も含む辺が重みを持つグラフへの最短経路探索
 |lower_bound | 数列への特定値に対するインデックス探索
 |DFSのin-out|特定ノードが特定ノードの配下にいることを確定
+|バイナリーインデックスツリー|先頭から任意の位置までの区間和　https://algo-logic.info/binary-indexed-tree/
 
 <br>
 <br>
