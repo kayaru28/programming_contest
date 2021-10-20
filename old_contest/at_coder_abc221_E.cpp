@@ -73,12 +73,33 @@ ll W;
 ll X;
 ll Y;
 ll Z;
+vll As,Bs;
 
 string S;
 
 ll ltmp;
 string stmp;
 double dtmp;
+double get2[base10_6];
+ll getMod(ll value,ll mod=MOD){
+    if(value == 0) return 0;
+    if(mod==0) return -1;
+    value %= mod;
+    if(value<0) value += mod;
+    return value;
+}
+ll getPower(ll value,ll shisu,ll mod=MOD){
+    ll ans = 1;
+    ll cnt = shisu;
+    while(cnt>0){
+        if(cnt%2==1){
+            ans = ans * value % mod;
+        }
+        value = value * value % mod;
+        cnt = cnt/2;
+    }
+    return ans;
+}
 
 ll llmin(ll a,ll b){
     if(a>=b) return b;
@@ -92,28 +113,65 @@ P d_move[4] = {
     P(0 , 1),P(0 , -1),P(1 , 0),P(-1 , 0)//,P(1 , 1),P(1 , -1),P(-1 , 1),P(-1 , -1)
 };
 //for(P drc : d_move)
-vll As;
-ll getMod(ll value,ll mod=MOD){
-    if(value == 0) return 0;
-    if(mod==0) return -1;
-    value %= mod;
-    if(value<0) value += mod;
-    return value;
+
+
+template <typename T>
+struct BIT {
+    // !!!!!!!!!!!! Indexの最小値は１！！
+    int n;          // 配列の要素数(数列の要素数+1)
+    vector<T> bit;  // データの格納先
+    BIT(int tree_size) : n(tree_size + 1), bit(n, 0) {}
+    
+    void add(int index, T val) {
+        for (int idx = index; idx < n; idx += (idx & -idx)) {
+            bit[idx] += val;
+        }
+    }
+
+    T sum(int index) {
+        T s(0);
+        for (int idx = index; idx > 0; idx -= (idx & -idx)) {
+            s += bit[idx];
+        }
+        return s;
+    }
+};
+ll modDivision(ll warareru, ll warukazu,ll mod=MOD){
+    //mod is prime number
+    //warukazu can not separate
+    ll div = getPower(warareru,mod-2);
+    return getPower(div,warukazu);
 }
 double double_hosei = 1000000; //求められる精度分補正をかけておく
-vll dp;
-ll getPower(ll value,ll shisu,ll mod=MOD){
-    ll ans = 1;
-    ll cnt = shisu;
-    while(cnt>0){
-        if(cnt%2==1){
-            ans = ans * value % mod;
-        }
-        value = value * value % mod;
-        cnt = cnt/2;
-    }
-    return ans;
+int comp(vector<ll> &A){
+    std::map<int,int> mem;
+    for(auto p: A) mem[p] = 0;
+    int sz = 0;
+    for(auto &p: mem) p.second = sz++;
+    for(auto &p: A) p = mem[p];
+    return sz;
 }
+struct binary_indexed_tree{
+    int N;
+    ll mod = MOD;
+    vector<ll> bit;
+    binary_indexed_tree(int n):N(n){
+        bit.resize(N+1,0);
+    }
+    ll addition(ll x, ll y){
+        return (x+y)%mod;
+    }
+    void add(int x,ll a){
+        x++;
+        for(x; x<=N; x+=(x&-x)) bit[x] = addition(bit[x],a);
+    }
+    ll sum(int x){
+        x++;
+        ll ret=0;
+        for(x; x>0; x-=(x&-x)) ret = addition(ret,bit[x]);
+        return ret;
+    }
+};
 int main(){
 
     ios::sync_with_stdio(false);
@@ -123,46 +181,33 @@ int main(){
     cin >> N;
     As.resize(N);
     rep(ni,N) cin >> As[ni];
-
-    map<ll,vll> mapval;
-    rep(ni,N){
-        mapval[As[ni]].push_back(ni);
-    }
-
-
-    //https://cpprefjp.github.io/reference/queue/priority_queue/pop.html
-    //std::priority_queue<ll> que;
-    //que.push(val);
-    //ll getv = que.top();
-    //que.pop();
-    //typedef pair<ll,ll> P;  
-    //que.push(P(0,base_index));
-    priority_queue<P,vector<P>, less<P> > que;
-    rep(ni,N){
-        que.push(P(As[ni],ni));
-    }
+    int nv = comp(As);
+    //BIT<ll> bittree(nv);
+    binary_indexed_tree bittree(nv);
+    ltmp = 1;
 
     ll ans = 0;
-    while(que.size()>0){
-        P getv = que.top();
-        que.pop();
-        ll val = getv.first;
-        ll ni = getv.second;
-        ll li = 0;
-        if(ni>0){
-            li = getPower(2,ni)-1;
-        }
-        ll ri = 0;
-        ll base = N-1-ni;
-        if(base>0){
-            ri = getPower(2,base)-1;
-        }
-        ans += 2 * li;
+    map<ll,ll> mapA;
+    rep(ni,N) mapA[As[ni]]=0;
+    ll cnt = 1;
+    for(auto x : mapA){
+        mapA[ x.first] = cnt;
+        cnt++;
+    }
+    rep(ni,N){
+        ll dans;
+        ll index = ni+1;
+        dans = getPower(2,index-1);
+        //cout << As[index-1] << endl;
+        dans *= bittree.sum(As[index-1]);
+        //cout << index << " " << dans << endl;
+        ans += dans;
         ans = getMod(ans);
-        ans -= ri;
-        ans = getMod(ans);
+        //cout << index << " " << modDivision(2,index) << endl;
+        bittree.add(As[index-1],modDivision(2,index));
     }
     cout << ans << endl;
+
 
 
 
