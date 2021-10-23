@@ -5,7 +5,7 @@
 |-|-|-|
 |vector         |変数列の順次格納|
 |multiset       |変数列を順次格納＆ソート|
-|que            |先入れ先出し　BFS|
+|que            |先入れ先出し　BFS 幅優先探索|
 |priorityque    |優先度順に先だし|
 |stack          |先入れ後だし　DFS|abc138-D
 |deque          |変数列の前方・後方データ挿入|zone2021-D

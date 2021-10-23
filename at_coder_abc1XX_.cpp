@@ -93,7 +93,7 @@ P d_move[4] = {
     P(0 , 1),P(0 , -1),P(1 , 0),P(-1 , 0)//,P(1 , 1),P(1 , -1),P(-1 , 1),P(-1 , -1)
 };
 //for(P drc : d_move)
-
+vvll masu;
 double double_hosei = 1000000; //求められる精度分補正をかけておく
 int main(){
 
@@ -108,5 +108,14 @@ int main(){
     rep(ni,N) cin >> As[ni];
 
     cin >> S;
+
+    cin >> H,W;
+    masu.resize(H);
+    rep(hi,H){
+        masu[hi].resize(W);
+        rep(wi,W) cin >> masu[hi][wi]
+    }
+
+    
 
 }
