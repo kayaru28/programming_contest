@@ -51,6 +51,10 @@
 <br>
 <br>
 
+### 数理法
+大きい値の大きい値乗を素数で割った余り・・・フェルマーの小定理（ABC228_E）
+
+
 ### 動的計画法
 |DPパターン|概要|参考問題|
 |-|-|-|
@@ -83,12 +87,13 @@
 <br>
 <br>
 
-
 ### 論理演算
 A xor B xor C = (A xor B) xor C
 A xor B xor C = A xor B xor C xor X xor X = (A xor X) xor (B xor C xor X)
 
 https://zero-kpr.hatenablog.com/entry/2020/01/17/084434
+
+
 
 
 
