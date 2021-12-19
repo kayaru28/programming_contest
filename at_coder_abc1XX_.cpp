@@ -109,11 +109,11 @@ int main(){
 
     cin >> S;
 
-    cin >> H,W;
+    cin >> H >> W;
     masu.resize(H);
     rep(hi,H){
         masu[hi].resize(W);
-        rep(wi,W) cin >> masu[hi][wi]
+        rep(wi,W) cin >> masu[hi][wi];
     }
 
     
