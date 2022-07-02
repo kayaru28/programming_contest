@@ -67,7 +67,6 @@ ll D;
 ll N;
 ll M;
 ll K;
-ll Q;
 ll T;
 ll H;
 ll W;
@@ -95,29 +94,73 @@ P d_move[4] = {
 };
 //for(P drc : d_move)
 vvll masu;
-string alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 double double_hosei = 1000000; //求められる精度分補正をかけておく
+map<ll,ll> memo;
+
+
+bool judgeBool(ll a){
+    ll ketaA = to_string(a).size();
+    ll ketaN = to_string(N).size();
+    if(ketaA > ketaN) return false;
+    else return true;
+}
 int main(){
 
     ios::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
 
-    cin >> N;
-    cin >> K;
+    cin >> A >> N;
 
-    As.resize(N);
-    rep(ni,N) cin >> As[ni];
+    //https://cpprefjp.github.io/reference/queue/priority_queue/pop.html
+    //std::priority_queue<ll> que;
+    //que.push(val);
+    //ll getv = que.top();
+    //que.pop();
+    //typedef pair<ll,ll> P;  
+    //que.push(P(0,base_index));
+    priority_queue<P,vector<P>, greater<P> > que;
+    
+    ll ans = -1;
+    que.push(P(0,1));
+    while(que.size()>0){
+        P getval = que.top();
+        que.pop();
+        ll tar = getval.second;
+        ll cnt = getval.first;
 
-    cin >> S;
+        if(tar == N){
+            ans = cnt;
+            break;
+        }
+        ll newval;
+        
+        newval = tar*A;
+        if(judgeBool(newval) && memo[newval]==0){
+            que.push(P(cnt+1,newval));
+            memo[newval]++;
+        }
+        if(tar>10 && tar%10 > 0){
+            ll boto = tar / 10;
+            ll keta = to_string(tar).size();
+            newval = tar % 10 * pow(10,keta-1) + boto;
+            //cout << tar << " " << newval << endl;
+            if(judgeBool(newval) && memo[newval]==0){
+                que.push(P(cnt+1,newval));
+                memo[newval]++;
+            }
+        }
+        
 
-    cin >> H >> W;
-    masu.resize(H);
-    rep(hi,H){
-        masu[hi].resize(W);
-        rep(wi,W) cin >> masu[hi][wi];
+
+
+
     }
 
+
+
+
+    cout << ans << endl;
     
 
 }
