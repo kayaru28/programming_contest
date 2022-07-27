@@ -19,7 +19,7 @@ using namespace std;
 #define decRepFT(i,s,n) for (ll i = (s); i >= (n) ; i--)
 
 #define INF 1e9
-#define llINF numeric_limits<long long>::max()
+#define llINF 1e18
 #define base10_4 10000      //1e4
 #define base10_5 100000     //1e5
 #define base10_6 1000000    //1e6
@@ -27,7 +27,7 @@ using namespace std;
 #define base10_8 100000000  //1e8
 #define base10_9 1000000000 //1e9
 
-#define MOD 1000000007
+#define MOD 998244353
 #define pb push_back
 #define ll long long
 #define ld long double
@@ -67,7 +67,6 @@ ll D;
 ll N;
 ll M;
 ll K;
-ll Q;
 ll T;
 ll H;
 ll W;
@@ -95,8 +94,14 @@ P d_move[4] = {
 };
 //for(P drc : d_move)
 vvll masu;
-string alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 double double_hosei = 1000000; //求められる精度分補正をかけておく
+ll getMod(ll value,ll mod=MOD){
+    if(value == 0) return 0;
+    if(mod==0) return -1;
+    value %= mod;
+    if(value<0) value += mod;
+    return value;
+}
 int main(){
 
     ios::sync_with_stdio(false);
@@ -104,20 +109,36 @@ int main(){
     cout.tie(0);
 
     cin >> N;
-    cin >> K;
 
-    As.resize(N);
-    rep(ni,N) cin >> As[ni];
+    ll keta = 1;
 
-    cin >> S;
-
-    cin >> H >> W;
-    masu.resize(H);
-    rep(hi,H){
-        masu[hi].resize(W);
-        rep(wi,W) cin >> masu[hi][wi];
+    ll ans = 0;
+    ll minv = 0;
+    ll maxv = 0;
+    ll cntv = 9;
+    string Ns = to_string(N);
+    while(keta <= Ns.size()){
+        minv = maxv + 1;
+        maxv = llmin(N,minv * 10 -1);
+        ll cntv = maxv - minv +1;
+        cntv = getMod(cntv);
+        
+        ll sumv = cntv * (cntv+1) / 2;
+        sumv = getMod(sumv);
+        
+        ans += sumv;
+        ans = getMod(ans);
+        //cout << minv << " " << maxv << " " << cntv << endl;
+        //cout << ans << " " << sumv << endl;
+        
+        
+        keta++;
+        //cout << keta << " " <<  N -  pow(10,keta-1)<< endl;
     }
 
-    
+
+    cout << ans << endl;
+
+
 
 }
